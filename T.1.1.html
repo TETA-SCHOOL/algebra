@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест з математики: Дійсні числа. Звичайні та десяткові дроби | TETA School</title>
+    <!-- Google Fonts for Onest font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Fixed Top Timer Bar */
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* All Questions List View */
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            border-color: var(--secondary);
+        }
+
+        .q-number-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .hint-box {
+            margin-bottom: 15px;
+            background: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hint-toggle {
+            width: 100%;
+            padding: 8px 14px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #92400E;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hint-toggle:hover { background: #FEF3C7; }
+
+        .hint-content {
+            padding: 0 14px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 0.88rem;
+            color: #78350F;
+            line-height: 1.4;
+        }
+
+        .hint-box.show .hint-content {
+            padding: 0 14px 10px;
+            max-height: 150px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        /* Matching Layout */
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Short Input */
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid var(--secondary);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .analysis-card h3 {
+            color: var(--primary);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .math {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-weight: bold;
+            padding: 0 2px;
+        }
+
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 3px;
+            font-size: 0.9em;
+        }
+
+        .frac-num {
+            border-bottom: 1px solid currentColor;
+            padding: 0 4px 2px;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        .frac-den {
+            padding: 2px 4px 0;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs>
+                    <style>.cls-1 { fill: #7d1111; }</style>
+                  </defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <g>
+                        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                      </g>
+                      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                    </g>
+                  </g>
+                </svg>
+            </div>
+            <div class="test-title">НМТ Контроль знань </div>
+            <div class="test-subtitle">Тема: Дійсні числа. Звичайні та десяткові дроби</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 10 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (у відповідь пишемо лише число)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Sticky Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--primary);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">10:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen (All Questions Visible At Once) -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 / 15</div>
+                    <div class="res-stat-lbl">Правильних відповідей</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3>Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 style="color: var(--primary); font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        // Total Pool of 45 Questions (3 pools of 15 questions each)
+        const allQuizPools = [
+            // ================= ПУЛ 1 (Запитання 1–15) =================
+            [
+                {
+                    id: 1, type: "single",
+                    question: "Обчисліть значення виразу: <span class='math'>-14 + 22</span>.",
+                    hint: "Пригадайте правило додавання чисел з різними знаками: відніміть менший модуль від більшого і поставте знак числа з більшим модулем.",
+                    options: [
+                        { label: "A", text: "<span class='math'>-36</span>", isCorrect: false, rationale: "Такий результат виходить при помилковому додаванні двох від'ємних чисел." },
+                        { label: "B", text: "<span class='math'>-8</span>", isCorrect: false, rationale: "Помилка у знаку. Більший модуль має додатне число 22." },
+                        { label: "C", text: "<span class='math'>8</span>", isCorrect: true, rationale: "Від більшого модуля віднімаємо менший: 22 - 14 = 8." },
+                        { label: "D", text: "<span class='math'>36</span>", isCorrect: false, rationale: "Результат додавання модулів без урахування знаків." }
+                    ]
+                },
+                {
+                    id: 2, type: "single",
+                    question: "Обчисліть різницю десяткових дробів: <span class='math'>18,3 - 4,56</span>.",
+                    hint: "Зрівняйте кількість знаків після коми, дописавши нуль: <span class='math'>18,30 - 4,56</span>.",
+                    options: [
+                        { label: "A", text: "<span class='math'>13,74</span>", isCorrect: true, rationale: "Правильно: 18,30 - 4,56 = 13,74." },
+                        { label: "B", text: "<span class='math'>13,84</span>", isCorrect: false, rationale: "Помилка при запозиченні десятка в розряді десятих." },
+                        { label: "C", text: "<span class='math'>14,26</span>", isCorrect: false, rationale: "Неправильне виконання віднімання в розряді одиниць." },
+                        { label: "D", text: "<span class='math'>13,76</span>", isCorrect: false, rationale: "Помилка обчислення в розряді сотих." }
+                    ]
+                },
+                {
+                    id: 3, type: "single",
+                    question: "Округліть число <span class='math'>3,7462</span> до сотих.",
+                    hint: "Зверніть увагу на цифру в розряді тисячних (третя цифра після коми).",
+                    options: [
+                        { label: "A", text: "<span class='math'>3,7</span>", isCorrect: false, rationale: "Це округлення до десятих." },
+                        { label: "B", text: "<span class='math'>3,74</span>", isCorrect: false, rationale: "Оскільки в розряді тисячних стоїть 6 (≥ 5), розряд сотих збільшується." },
+                        { label: "C", text: "<span class='math'>3,75</span>", isCorrect: true, rationale: "Правильно: за 4 стоїть 6 (≥ 5), тому соті збільшуємо до 5." },
+                        { label: "D", text: "<span class='math'>3,746</span>", isCorrect: false, rationale: "Це округлення до тисячних." }
+                    ]
+                },
+                {
+                    id: 4, type: "single",
+                    question: "Яку цифру замість зірочки треба поставити в числі <span class='math'>31*4</span>, щоб воно ділилося націло на <span class='math'>3</span>?",
+                    hint: "Число ділиться на 3, якщо сума його цифр ділиться на 3. Обчисліть суму: 3 + 1 + 4 = 8.",
+                    options: [
+                        { label: "A", text: "<span class='math'>1</span>", isCorrect: true, rationale: "Сума цифр: 3 + 1 + 1 + 4 = 9, що ділиться на 3." },
+                        { label: "B", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Сума цифр дорівнює 10, на 3 не ділиться." },
+                        { label: "C", text: "<span class='math'>3</span>", isCorrect: false, rationale: "Сума цифр дорівнює 11, на 3 не ділиться." },
+                        { label: "D", text: "<span class='math'>5</span>", isCorrect: false, rationale: "Сума цифр дорівнює 13, на 3 не ділиться." }
+                    ]
+                },
+                {
+                    id: 5, type: "single",
+                    question: "Знайдіть найбільший спільний дільник (НСД) чисел <span class='math'>24</span> і <span class='math'>36</span>.",
+                    hint: "Знайдіть найбільше число, на яке діляться націло і 24, і 36.",
+                    options: [
+                        { label: "A", text: "<span class='math'>6</span>", isCorrect: false, rationale: "6 є спільним дільником, але не найбільшим." },
+                        { label: "B", text: "<span class='math'>12</span>", isCorrect: true, rationale: "Правильно: 24:12 = 2, 36:12 = 3. Це НСД." },
+                        { label: "C", text: "<span class='math'>18</span>", isCorrect: false, rationale: "24 не ділиться на 18 націло." },
+                        { label: "D", text: "<span class='math'>72</span>", isCorrect: false, rationale: "72 — це найменше спільне кратне (НСК)." }
+                    ]
+                },
+                {
+                    id: 6, type: "single",
+                    question: "Яка найменша довжина стрічки (у см) може бути в рулоні, щоб її можна було розрізати без залишку на частини по <span class='math'>8</span> см або по <span class='math'>12</span> см?",
+                    hint: "Знайдіть найменше спільне кратне (НСК) чисел 8 і 12.",
+                    options: [
+                        { label: "A", text: "<span class='math'>16</span> см", isCorrect: false, rationale: "16 не ділиться на 12." },
+                        { label: "B", text: "<span class='math'>24</span> см", isCorrect: true, rationale: "Правильно: НСК(8, 12) = 24." },
+                        { label: "C", text: "<span class='math'>48</span> см", isCorrect: false, rationale: "Це кратне, але не найменше." },
+                        { label: "D", text: "<span class='math'>96</span> см", isCorrect: false, rationale: "Занадто велике число." }
+                    ]
+                },
+                {
+                    id: 7, type: "single",
+                    question: "Обчисліть добуток: <span class='math'>1 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span></span>.",
+                    hint: "Перетворіть мішане число 1 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span> у неправильний дріб <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>.",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: true, rationale: "Правильно: <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span> = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>8</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>." },
+                        { label: "B", text: "<span class='math'><span class='frac'><span class='frac-num'>3</span><span class='frac-den'>24</span></span></span>", isCorrect: false, rationale: "Помилка скорочення." },
+                        { label: "C", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>24</span></span></span>", isCorrect: false, rationale: "Помилка множення цілої частини окремо." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>4</span><span class='frac-den'>24</span></span></span>", isCorrect: false, rationale: "Неправильне скорочення." }
+                    ]
+                },
+                {
+                    id: 8, type: "single",
+                    question: "Виконайте ділення: <span class='math'>3 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> : 7</span>.",
+                    hint: "Запишіть мішане число як <span class='frac'><span class='frac-num'>7</span><span class='frac-den'>2</span></span> та помножте на <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>7</span></span>.",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: true, rationale: "Правильно: <span class='frac'><span class='frac-num'>7</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>7</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>." },
+                        { label: "B", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Результат оберненого ділення." },
+                        { label: "C", text: "<span class='math'>24 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: false, rationale: "Помилка множення замість ділення." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>7</span><span class='frac-den'>14</span></span></span>", isCorrect: false, rationale: "Нескоротний дріб." }
+                    ]
+                },
+                {
+                    id: 9, type: "single",
+                    question: "Обчисліть: <span class='math'>5 - 6 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span></span>.",
+                    hint: "Від від'ємного числа з більшим модулем віднімаємо менший модуль.",
+                    options: [
+                        { label: "A", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span></span>", isCorrect: false, rationale: "Загублено знак мінус." },
+                        { label: "B", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span></span>", isCorrect: true, rationale: "Правильно: -(6 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span> - 5) = -1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span>." },
+                        { label: "C", text: "<span class='math'>-11 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span></span>", isCorrect: false, rationale: "Додавання модулів." },
+                        { label: "D", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>5</span></span></span>", isCorrect: false, rationale: "Помилка обчислення дробової частини." }
+                    ]
+                },
+                {
+                    id: 10, type: "single",
+                    question: "Розташуйте числа в порядку зростання: <span class='math'>0,32; 0,302; 0,4</span>.",
+                    hint: "Порівняйте розряди десятих, а потім сотих: 0,302 < 0,320 < 0,400.",
+                    options: [
+                        { label: "A", text: "<span class='math'>0,4; 0,32; 0,302</span>", isCorrect: false, rationale: "Це порядок спадання." },
+                        { label: "B", text: "<span class='math'>0,302; 0,32; 0,4</span>", isCorrect: true, rationale: "Правильно: 0,302 < 0,32 < 0,4." },
+                        { label: "C", text: "<span class='math'>0,32; 0,302; 0,4</span>", isCorrect: false, rationale: "0,32 більше за 0,302." },
+                        { label: "D", text: "<span class='math'>0,302; 0,4; 0,32</span>", isCorrect: false, rationale: "0,4 більше за 0,32." }
+                    ]
+                },
+                {
+                    id: 11, type: "matching",
+                    question: "Установіть відповідність між числом (1–3) та множиною, до якої воно належить (А–Д).",
+                    hint: "Згадайте класифікацію дійсних чисел.",
+                    leftItems: ["1) -15", "2) √5", "3) 0,(6)"],
+                    rightItems: ["А) Множина натуральних чисел", "Б) Множина цілих чисел, що не є натуральними", "В) Множина ірраціональних чисел", "Г) Множина дробових раціональних чисел", "Д) Не є дійсним числом"],
+                    correctAnswers: { 0: "Б", 1: "В", 2: "Г" },
+                    rationale: "1 -> Б (-15 — ціле від'ємне число); 2 -> В (корінь з 5 — ірраціональне число); 3 -> Г (0,(6) = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span> — дробове раціональне)."
+                },
+                {
+                    id: 12, type: "matching",
+                    question: "Установіть відповідність між математичним виразом (1–3) та його числовим значенням (А–Д).",
+                    hint: "Послідовно обчисліть значення виразів.",
+                    leftItems: ["1) |-6,3 : 0,9|", "2) 2,5 · 0,4 + 0,2", "3) 3 · (1,5 - 0,7)"],
+                    rightItems: ["А) 1,2", "Б) 2,4", "В) 7", "Г) -7", "Д) 1,0"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1 -> В (|-7| = 7); 2 -> А (1,0 + 0,2 = 1,2); 3 -> Б (3 · 0,8 = 2,4)."
+                },
+                {
+                    id: 13, type: "matching",
+                    question: "Установіть відповідність між звичайним дробом (1–3) та рівним йому десятковим дробом (А–Д).",
+                    hint: "Поділіть чисельник на знаменник.",
+                    leftItems: ["1) <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>4</span></span>", "2) <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>5</span></span>", "3) <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span>"],
+                    rightItems: ["А) 0,2", "Б) 0,375", "В) 0,75", "Г) 0,6", "Д) 0,125"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1 -> В (<span class='frac'><span class='frac-num'>3</span><span class='frac-den'>4</span></span> = 0,75); 2 -> А (<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>5</span></span> = 0,2); 3 -> Б (<span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span> = 0,375)."
+                },
+                {
+                    id: 14, type: "short",
+                    question: "Олексій за <span class='math'>12</span> хвилин пробігає <span class='math'>3</span> км. Скільки кілометрів він пробіжить за <span class='math'>20</span> хвилин, рухаючись із такою ж швидкістю?",
+                    hint: "Швидкість: 3 км / 12 хв = 0,25 км/хв.",
+                    correctAnswer: "5",
+                    rationale: "Швидкість: 3 / 12 = 0,25 км/хв. За 20 хвилин: 0,25 · 20 = 5 км."
+                },
+                {
+                    id: 15, type: "short",
+                    question: "Зошит коштує <span class='math'>12</span> грн, а ручка — <span class='math'>8</span> грн. Яка вартість (у грн) <span class='math'>4</span> зошитів і <span class='math'>3</span> ручок разом?",
+                    hint: "Обчисліть 4 · 12 + 3 · 8.",
+                    correctAnswer: "72",
+                    rationale: "4 · 12 + 3 · 8 = 48 + 24 = 72 грн."
+                }
+            ],
+            // ================= ПУЛ 2 (Запитання 16–30) =================
+            [
+                {
+                    id: 16, type: "single",
+                    question: "Обчисліть значення виразу: <span class='math'>-16 + 25</span>.",
+                    hint: "Відніміть від більшого модуля менший: 25 - 16.",
+                    options: [
+                        { label: "A", text: "<span class='math'>-41</span>", isCorrect: false, rationale: "Помилка знака та додавання модулів." },
+                        { label: "B", text: "<span class='math'>-9</span>", isCorrect: false, rationale: "Неправильний знак результату." },
+                        { label: "C", text: "<span class='math'>9</span>", isCorrect: true, rationale: "Правильно: 25 - 16 = 9." },
+                        { label: "D", text: "<span class='math'>41</span>", isCorrect: false, rationale: "Додавання без урахування знаків." }
+                    ]
+                },
+                {
+                    id: 17, type: "single",
+                    question: "Обчисліть різницю десяткових дробів: <span class='math'>16,2 - 4,73</span>.",
+                    hint: "Вирівняйте кількість знаків: <span class='math'>16,20 - 4,73</span>.",
+                    options: [
+                        { label: "A", text: "<span class='math'>11,47</span>", isCorrect: true, rationale: "Правильно: 16,20 - 4,73 = 11,47." },
+                        { label: "B", text: "<span class='math'>11,57</span>", isCorrect: false, rationale: "Помилка запозичення в десятих." },
+                        { label: "C", text: "<span class='math'>12,53</span>", isCorrect: false, rationale: "Помилка віднімання цілої частини." },
+                        { label: "D", text: "<span class='math'>11,43</span>", isCorrect: false, rationale: "Помилка в розряді сотих." }
+                    ]
+                },
+                {
+                    id: 18, type: "single",
+                    question: "Округліть число <span class='math'>4,8539</span> до сотих.",
+                    hint: "Подивіться на цифру тисячних (3).",
+                    options: [
+                        { label: "A", text: "<span class='math'>4,8</span>", isCorrect: false, rationale: "Це округлення до десятих." },
+                        { label: "B", text: "<span class='math'>4,85</span>", isCorrect: true, rationale: "Після 5 стоїть 3 (< 5), тому соті залишаються без змін." },
+                        { label: "C", text: "<span class='math'>4,86</span>", isCorrect: false, rationale: "Помилкове збільшення розряду." },
+                        { label: "D", text: "<span class='math'>4,854</span>", isCorrect: false, rationale: "Округлення до тисячних." }
+                    ]
+                },
+                {
+                    id: 19, type: "single",
+                    question: "Яку цифру замість зірочки треба поставити в числі <span class='math'>51*2</span>, щоб воно ділилося націло на <span class='math'>3</span>?",
+                    hint: "Сума цифр: 5 + 1 + 2 = 8.",
+                    options: [
+                        { label: "A", text: "<span class='math'>0</span>", isCorrect: false, rationale: "Сума 8 не ділиться на 3." },
+                        { label: "B", text: "<span class='math'>1</span>", isCorrect: true, rationale: "Сума цифр: 5 + 1 + 1 + 2 = 9, що ділиться на 3." },
+                        { label: "C", text: "<span class='math'>3</span>", isCorrect: false, rationale: "Сума 11 не ділиться на 3." },
+                        { label: "D", text: "<span class='math'>5</span>", isCorrect: false, rationale: "Сума 13 не ділиться на 3." }
+                    ]
+                },
+                {
+                    id: 20, type: "single",
+                    question: "Знайдіть найбільший спільний дільник (НСД) чисел <span class='math'>28</span> і <span class='math'>42</span>.",
+                    hint: "28 = 14 · 2, 42 = 14 · 3.",
+                    options: [
+                        { label: "A", text: "<span class='math'>7</span>", isCorrect: false, rationale: "Спільний дільник, але не найбільший." },
+                        { label: "B", text: "<span class='math'>14</span>", isCorrect: true, rationale: "14 — найбільший спільний дільник." },
+                        { label: "C", text: "<span class='math'>21</span>", isCorrect: false, rationale: "28 не ділиться на 21." },
+                        { label: "D", text: "<span class='math'>84</span>", isCorrect: false, rationale: "Це НСК цих чисел." }
+                    ]
+                },
+                {
+                    id: 21, type: "single",
+                    question: "Яка найменша довжина стрічки (у см) може бути в рулоні, щоб її можна було розрізати без залишку на частини по <span class='math'>10</span> см або по <span class='math'>15</span> см?",
+                    hint: "Обчисліть НСК(10, 15).",
+                    options: [
+                        { label: "A", text: "<span class='math'>20</span> см", isCorrect: false, rationale: "Не ділиться на 15." },
+                        { label: "B", text: "<span class='math'>30</span> см", isCorrect: true, rationale: "НСК(10, 15) = 30." },
+                        { label: "C", text: "<span class='math'>60</span> см", isCorrect: false, rationale: "Кратне, але не найменше." },
+                        { label: "D", text: "<span class='math'>150</span> см", isCorrect: false, rationale: "Занадто велике кратне." }
+                    ]
+                },
+                {
+                    id: 22, type: "single",
+                    question: "Обчисліть добуток: <span class='math'>1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>10</span></span></span>.",
+                    hint: "Перетворіть 1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span> у <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>3</span></span>.",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: true, rationale: "<span class='frac'><span class='frac-num'>5</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>10</span></span> = <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>10</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>." },
+                        { label: "B", text: "<span class='math'><span class='frac'><span class='frac-num'>6</span><span class='frac-den'>30</span></span></span>", isCorrect: false, rationale: "Неправильні обчислення." },
+                        { label: "C", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>6</span><span class='frac-den'>30</span></span></span>", isCorrect: false, rationale: "Помилка множення." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>5</span><span class='frac-den'>30</span></span></span>", isCorrect: false, rationale: "Помилка скорочення." }
+                    ]
+                },
+                {
+                    id: 23, type: "single",
+                    question: "Виконайте ділення: <span class='math'>4 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> : 9</span>.",
+                    hint: "<span class='frac'><span class='frac-num'>9</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>9</span></span> = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: true, rationale: "<span class='frac'><span class='frac-num'>9</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>9</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>." },
+                        { label: "B", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Обернений результат." },
+                        { label: "C", text: "<span class='math'>40 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: false, rationale: "Множення замість ділення." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>9</span><span class='frac-den'>18</span></span></span>", isCorrect: false, rationale: "Скоротіть дріб." }
+                    ]
+                },
+                {
+                    id: 24, type: "single",
+                    question: "Обчисліть: <span class='math'>6 - 7 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span></span>.",
+                    hint: "-(7 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span> - 6) = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span></span>", isCorrect: false, rationale: "Пропущено мінус." },
+                        { label: "B", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span></span>", isCorrect: true, rationale: "-(7 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span> - 6) = -1 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span>." },
+                        { label: "C", text: "<span class='math'>-13 <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>8</span></span></span>", isCorrect: false, rationale: "Додавання модулів." },
+                        { label: "D", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>8</span></span></span>", isCorrect: false, rationale: "Помилка дробової частини." }
+                    ]
+                },
+                {
+                    id: 25, type: "single",
+                    question: "Розташуйте числа в порядку зростання: <span class='math'>0,61; 0,601; 0,7</span>.",
+                    hint: "0,601 < 0,610 < 0,700.",
+                    options: [
+                        { label: "A", text: "<span class='math'>0,7; 0,61; 0,601</span>", isCorrect: false, rationale: "Порядок спадання." },
+                        { label: "B", text: "<span class='math'>0,601; 0,61; 0,7</span>", isCorrect: true, rationale: "0,601 < 0,61 < 0,7." },
+                        { label: "C", text: "<span class='math'>0,61; 0,601; 0,7</span>", isCorrect: false, rationale: "Помилка порядку." },
+                        { label: "D", text: "<span class='math'>0,601; 0,7; 0,61</span>", isCorrect: false, rationale: "0,7 більше за 0,61." }
+                    ]
+                },
+                {
+                    id: 26, type: "matching",
+                    question: "Установіть відповідність між числом (1–3) та множиною, до якої воно належить (А–Д).",
+                    hint: "Розподіліть числа по множинах.",
+                    leftItems: ["1) -18", "2) √3", "3) 0,(4)"],
+                    rightItems: ["А) Множина натуральних чисел", "Б) Множина цілих чисел, що не є натуральними", "В) Множина ірраціональних чисел", "Г) Множина дробових раціональних чисел", "Д) Не є дійсним числом"],
+                    correctAnswers: { 0: "Б", 1: "В", 2: "Г" },
+                    rationale: "1 -> Б (-18 — ціле від'ємне); 2 -> В (√3 — ірраціональне); 3 -> Г (0,(4) = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span> — дробове раціональне)."
+                },
+                {
+                    id: 27, type: "matching",
+                    question: "Установіть відповідність між математичним виразом (1–3) та його числовим значенням (А–Д).",
+                    hint: "Обчисліть значення виразів.",
+                    leftItems: ["1) |-4,8 : 0,8|", "2) 3,5 · 0,2 + 0,5", "3) 4 · (1,6 - 0,9)"],
+                    rightItems: ["А) 1,2", "Б) 2,8", "В) 6", "Г) -6", "Д) 1,0"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1 -> В (|-6| = 6); 2 -> А (0,7 + 0,5 = 1,2); 3 -> Б (4 · 0,7 = 2,8)."
+                },
+                {
+                    id: 28, type: "matching",
+                    question: "Установіть відповідність між звичайним дробом (1–3) та рівним йому десятковим дробом (А–Д).",
+                    hint: "Перетворіть дроби у десяткові.",
+                    leftItems: ["1) <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>4</span></span>", "2) <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span>", "3) <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>8</span></span>"],
+                    rightItems: ["А) 0,25", "Б) 0,4", "В) 0,625", "Г) 0,2", "Д) 0,5"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 -> А (<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>4</span></span> = 0,25); 2 -> Б (<span class='frac'><span class='frac-num'>2</span><span class='frac-den'>5</span></span> = 0,4); 3 -> В (<span class='frac'><span class='frac-num'>5</span><span class='frac-den'>8</span></span> = 0,625)."
+                },
+                {
+                    id: 29, type: "short",
+                    question: "Марійка за <span class='math'>15</span> хвилин прочитала <span class='math'>30</span> сторінок книги. Скільки сторінок вона прочитає за <span class='math'>25</span> хвилин, читаючи з такою ж швидкістю?",
+                    hint: "Швидкість: 30 : 15 = 2 сторінки/хв.",
+                    correctAnswer: "50",
+                    rationale: "2 сторінки/хв · 25 хв = 50 сторінок."
+                },
+                {
+                    id: 30, type: "short",
+                    question: "Зошит коштує <span class='math'>15</span> грн, а ручка — <span class='math'>10</span> грн. Яка вартість (у грн) <span class='math'>3</span> зошитів і <span class='math'>4</span> ручок разом?",
+                    hint: "Обчисліть 3 · 15 + 4 · 10.",
+                    correctAnswer: "85",
+                    rationale: "45 + 40 = 85 грн."
+                }
+            ],
+            // ================= ПУЛ 3 (Запитання 31–45) =================
+            [
+                {
+                    id: 31, type: "single",
+                    question: "Обчисліть значення виразу: <span class='math'>-13 + 21</span>.",
+                    hint: "21 - 13 = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'>-34</span>", isCorrect: false, rationale: "Помилка знака." },
+                        { label: "B", text: "<span class='math'>-8</span>", isCorrect: false, rationale: "Помилка у знаку результату." },
+                        { label: "C", text: "<span class='math'>8</span>", isCorrect: true, rationale: "21 - 13 = 8." },
+                        { label: "D", text: "<span class='math'>34</span>", isCorrect: false, rationale: "Додавання модулів." }
+                    ]
+                },
+                {
+                    id: 32, type: "single",
+                    question: "Обчисліть різницю десяткових дробів: <span class='math'>17,4 - 5,83</span>.",
+                    hint: "17,40 - 5,83 = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'>11,57</span>", isCorrect: true, rationale: "17,40 - 5,83 = 11,57." },
+                        { label: "B", text: "<span class='math'>11,67</span>", isCorrect: false, rationale: "Помилка розряду десятих." },
+                        { label: "C", text: "<span class='math'>12,43</span>", isCorrect: false, rationale: "Помилка розряду одиниць." },
+                        { label: "D", text: "<span class='math'>11,53</span>", isCorrect: false, rationale: "Помилка розряду сотих." }
+                    ]
+                },
+                {
+                    id: 33, type: "single",
+                    question: "Округліть число <span class='math'>5,6371</span> до сотих.",
+                    hint: "Цифра в тисячних дорівнює 7 (≥ 5).",
+                    options: [
+                        { label: "A", text: "<span class='math'>5,6</span>", isCorrect: false, rationale: "Округлення до десятих." },
+                        { label: "B", text: "<span class='math'>5,63</span>", isCorrect: false, rationale: "Загублено збільшення на 1." },
+                        { label: "C", text: "<span class='math'>5,64</span>", isCorrect: true, rationale: "5,6371 ≈ 5,64." },
+                        { label: "D", text: "<span class='math'>5,637</span>", isCorrect: false, rationale: "Округлення до тисячних." }
+                    ]
+                },
+                {
+                    id: 34, type: "single",
+                    question: "Яку цифру замість зірочки треба поставити в числі <span class='math'>61*1</span>, щоб воно ділилося націло на <span class='math'>3</span>?",
+                    hint: "Сума цифр: 6 + 1 + 1 = 8.",
+                    options: [
+                        { label: "A", text: "<span class='math'>1</span>", isCorrect: true, rationale: "Сума цифр: 6 + 1 + 1 + 1 = 9, що ділиться на 3." },
+                        { label: "B", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Сума 10 не ділиться на 3." },
+                        { label: "C", text: "<span class='math'>3</span>", isCorrect: false, rationale: "Сума 11 не ділиться на 3." },
+                        { label: "D", text: "<span class='math'>5</span>", isCorrect: false, rationale: "Сума 13 не ділиться на 3." }
+                    ]
+                },
+                {
+                    id: 35, type: "single",
+                    question: "Знайдіть найбільший спільний дільник (НСД) чисел <span class='math'>32</span> і <span class='math'>48</span>.",
+                    hint: "32 = 16 · 2, 48 = 16 · 3.",
+                    options: [
+                        { label: "A", text: "<span class='math'>8</span>", isCorrect: false, rationale: "Дільник, але не найбільший." },
+                        { label: "B", text: "<span class='math'>16</span>", isCorrect: true, rationale: "16 — найбільший спільний дільник." },
+                        { label: "C", text: "<span class='math'>24</span>", isCorrect: false, rationale: "32 не ділиться на 24." },
+                        { label: "D", text: "<span class='math'>96</span>", isCorrect: false, rationale: "Це НСК." }
+                    ]
+                },
+                {
+                    id: 36, type: "single",
+                    question: "Яка найменша довжина стрічки (у см) може бути в рулоні, щоб її можна було розрізати без залишку на частини по <span class='math'>6</span> см або по <span class='math'>15</span> см?",
+                    hint: "Обчисліть НСК(6, 15).",
+                    options: [
+                        { label: "A", text: "<span class='math'>18</span> см", isCorrect: false, rationale: "Не ділиться на 15." },
+                        { label: "B", text: "<span class='math'>30</span> см", isCorrect: true, rationale: "НСК(6, 15) = 30." },
+                        { label: "C", text: "<span class='math'>60</span> см", isCorrect: false, rationale: "Не найменше кратне." },
+                        { label: "D", text: "<span class='math'>90</span> см", isCorrect: false, rationale: "Занадто велике кратне." }
+                    ]
+                },
+                {
+                    id: 37, type: "single",
+                    question: "Обчисліть добуток: <span class='math'>1 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>9</span></span></span>.",
+                    hint: "<span class='frac'><span class='frac-num'>3</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>9</span></span> = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span></span>", isCorrect: true, rationale: "<span class='frac'><span class='frac-num'>3</span><span class='frac-den'>2</span></span> · <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>9</span></span> = <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>9</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span>." },
+                        { label: "B", text: "<span class='math'><span class='frac'><span class='frac-num'>2</span><span class='frac-den'>18</span></span></span>", isCorrect: false, rationale: "Помилка множення." },
+                        { label: "C", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>18</span></span></span>", isCorrect: false, rationale: "Помилка перетворення." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>3</span><span class='frac-den'>18</span></span></span>", isCorrect: false, rationale: "Помилка скорочення." }
+                    ]
+                },
+                {
+                    id: 38, type: "single",
+                    question: "Виконайте ділення: <span class='math'>5 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span> : 8</span>.",
+                    hint: "<span class='frac'><span class='frac-num'>16</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>8</span></span> = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'><span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span></span>", isCorrect: true, rationale: "<span class='frac'><span class='frac-num'>16</span><span class='frac-den'>3</span></span> · <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>8</span></span> = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span>." },
+                        { label: "B", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span></span>", isCorrect: false, rationale: "Обернений дріб." },
+                        { label: "C", text: "<span class='math'>42 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span></span>", isCorrect: false, rationale: "Множення замість ділення." },
+                        { label: "D", text: "<span class='math'><span class='frac'><span class='frac-num'>8</span><span class='frac-den'>24</span></span></span>", isCorrect: false, rationale: "Скоротіть дріб." }
+                    ]
+                },
+                {
+                    id: 39, type: "single",
+                    question: "Обчисліть: <span class='math'>7 - 8 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span></span>.",
+                    hint: "-(8 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span> - 7) = ?",
+                    options: [
+                        { label: "A", text: "<span class='math'>1 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span></span>", isCorrect: false, rationale: "Пропущено мінус." },
+                        { label: "B", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span></span>", isCorrect: true, rationale: "-(8 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span> - 7) = -1 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span>." },
+                        { label: "C", text: "<span class='math'>-15 <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>9</span></span></span>", isCorrect: false, rationale: "Додавання чисел." },
+                        { label: "D", text: "<span class='math'>-1 <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>9</span></span></span>", isCorrect: false, rationale: "Помилка дробової частини." }
+                    ]
+                },
+                {
+                    id: 40, type: "single",
+                    question: "Розташуйте числа в порядку зростання: <span class='math'>0,52; 0,502; 0,6</span>.",
+                    hint: "0,502 < 0,520 < 0,600.",
+                    options: [
+                        { label: "A", text: "<span class='math'>0,6; 0,52; 0,502</span>", isCorrect: false, rationale: "Спадання." },
+                        { label: "B", text: "<span class='math'>0,502; 0,52; 0,6</span>", isCorrect: true, rationale: "0,502 < 0,52 < 0,6." },
+                        { label: "C", text: "<span class='math'>0,52; 0,502; 0,6</span>", isCorrect: false, rationale: "Помилка порівняння." },
+                        { label: "D", text: "<span class='math'>0,502; 0,6; 0,52</span>", isCorrect: false, rationale: "0,6 більше за 0,52." }
+                    ]
+                },
+                {
+                    id: 41, type: "matching",
+                    question: "Установіть відповідність між числом (1–3) та множиною, до якої воно належить (А–Д).",
+                    hint: "Класифікуйте числа за множинами.",
+                    leftItems: ["1) -20", "2) √11", "3) 0,(7)"],
+                    rightItems: ["А) Множина натуральних чисел", "Б) Множина цілих чисел, що не є натуральними", "В) Множина ірраціональних чисел", "Г) Множина дробових раціональних чисел", "Д) Не є дійсним числом"],
+                    correctAnswers: { 0: "Б", 1: "В", 2: "Г" },
+                    rationale: "1 -> Б (-20 — ціле від'ємне); 2 -> В (√11 — ірраціональне); 3 -> Г (0,(7) = <span class='frac'><span class='frac-num'>7</span><span class='frac-den'>9</span></span> — дробове раціональне)."
+                },
+                {
+                    id: 42, type: "matching",
+                    question: "Установіть відповідність між математичним виразом (1–3) та його числовим значенням (А–Д).",
+                    hint: "Обчисліть значення кожної дії.",
+                    leftItems: ["1) |-5,6 : 0,7|", "2) 4,5 · 0,2 + 0,3", "3) 5 · (1,4 - 0,8)"],
+                    rightItems: ["А) 1,2", "Б) 3,0", "В) 8", "Г) -8", "Д) 1,0"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1 -> В (|-8| = 8); 2 -> А (0,9 + 0,3 = 1,2); 3 -> Б (5 · 0,6 = 3,0)."
+                },
+                {
+                    id: 43, type: "matching",
+                    question: "Установіть відповідність між звичайним дробом (1–3) та рівним йому десятковим дробом (А–Д).",
+                    hint: "Перетворіть дроби в десяткові.",
+                    leftItems: ["1) <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>", "2) <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>5</span></span>", "3) <span class='frac'><span class='frac-num'>7</span><span class='frac-den'>8</span></span>"],
+                    rightItems: ["А) 0,5", "Б) 0,8", "В) 0,875", "Г) 0,4", "Д) 0,25"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 -> А (<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> = 0,5); 2 -> Б (<span class='frac'><span class='frac-num'>4</span><span class='frac-den'>5</span></span> = 0,8); 3 -> В (<span class='frac'><span class='frac-num'>7</span><span class='frac-den'>8</span></span> = 0,875)."
+                },
+                {
+                    id: 44, type: "short",
+                    question: "Токар за <span class='math'>10</span> хвилин виготовляє <span class='math'>4</span> деталі. Скільки деталей він виготовить за <span class='math'>35</span> хвилин, працюючи з такою ж продуктивністю?",
+                    hint: "Продуктивність: 4 / 10 = 0,4 деталі/хв.",
+                    correctAnswer: "14",
+                    rationale: "0,4 · 35 = 14 деталей."
+                },
+                {
+                    id: 45, type: "short",
+                    question: "Зошит коштує <span class='math'>10</span> грн, а ручка — <span class='math'>6</span> грн. Яка вартість (у грн) <span class='math'>5</span> зошитів і <span class='math'>4</span> ручок разом?",
+                    hint: "Обчисліть 5 · 10 + 4 · 6.",
+                    correctAnswer: "74",
+                    rationale: "50 + 24 = 74 грн."
+                }
+            ]
+        ];
+
+        // Track Current Attempt/Pool Index (0, 1, 2, then cycles back)
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 600; // 10 minutes
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        // DOM elements
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        // Start Quiz Procedure
+        function startQuiz() {
+            // Load current pool questions
+            currentQuestions = allQuizPools[currentPoolIndex];
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 600;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        // Render Questions in List Mode
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">Завдання ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="hint-box" id="hint-box-${q.id}">
+                        <button class="hint-toggle" onclick="document.getElementById('hint-box-${q.id}').classList.toggle('show')">
+                            💡 Підказка
+                        </button>
+                        <div class="hint-content">${q.hint}</div>
+                    </div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r[0]}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        // Option Selection Handlers
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        // Timer Logic
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Finish Quiz & Show Analysis
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+                let userPoints = 0;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">Завдання ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        userPoints = 1;
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${q.options[selectedIdx !== undefined ? selectedIdx : 0]?.rationale || q.options.find(o=>o.isCorrect).rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    userPoints = matchCorrectCount;
+                    if (matchCorrectCount === 3) isCorrect = true;
+
+                    reviewHtml += `
+                        <div class="feedback-box ${matchCorrectCount === 3 ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = uVal === q.correctAnswer;
+                    if (isCorrect) userPoints = 1;
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale}</em>
+                        </div>
+                    `;
+                }
+
+                totalPoints += userPoints;
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            // Summary calculation
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} / ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            // General Analysis text
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви демонструєте глибоке розуміння дій із дійсними числами, звичайними та десятковими дробами. Всі ключові правила обчислень та перетворень засвоєні на високому рівні.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре орієнтуєтеся в основній теорії та вмієте застосовувати математичні правила. Для покращення результату зверніть увагу на завдання, у яких були допущені помилки.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базове розуміння матеріалу, але присутні системні помилки в обчисленнях або порядку дій. Рекомендується повторити теми: "Правила знаків", "Зведення дробів до спільного знаменника" та "Округлення чисел".`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли значні труднощі при виконанні завдань. Зверніться до теоретичного матеріалу з теми "Дійсні числа. Дроби" та обов'язково проаналізуйте розбір кожного завдання нижче.`;
+            }
+
+            // Advance Pool Index for Next Attempt (Cycle through 0 -> 1 -> 2 -> 0)
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show Start Screen with Clean Rules for Next Attempt
+        function prepareNextAttempt() {
+            startScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            testContent.style.display = 'none';
+            stickyTimerBar.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>

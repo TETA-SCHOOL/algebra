@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест з математики: Властивості коренів | TETA School</title>
+    <!-- Google Fonts for Onest font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+        }
+
+        /* Header Layout */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar & Timer */
+        .progress-container {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        /* Question Box */
+        .question-box {
+            display: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Hint Box */
+        .hint-box {
+            margin-bottom: 20px;
+            background: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hint-toggle {
+            width: 100%;
+            padding: 8px 14px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #92400E;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hint-toggle:hover {
+            background: #FEF3C7;
+        }
+
+        .hint-content {
+            padding: 0 14px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 0.9rem;
+            color: #78350F;
+            line-height: 1.4;
+        }
+
+        .hint-box.show .hint-content {
+            padding: 0 14px 10px;
+            max-height: 150px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .opt-label {
+            background: #0E9F6E;
+            color: #FFF;
+        }
+
+        .option-btn.wrong .opt-label {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background-color: #E6F4EA;
+            border: 1px solid #34A853;
+            color: #137333;
+        }
+
+        .feedback-box.wrong {
+            background-color: #FCE8E6;
+            border: 1px solid #EA4335;
+            color: #C5221F;
+        }
+
+        /* Action Buttons - RED (#7D1111) */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background-color: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .actions-right {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .score-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0, 83, 134, 0.25);
+        }
+
+        .score-badge .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-badge .score-total {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Math Typography */
+        .math, .math-block { font-family: "Cambria Math", "Times New Roman", Times, serif; font-style: italic; }
+        .math-block { display: block; text-align: center; margin: 10px 0; font-size: 110%; }
+        .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 3px; font-size: 0.9em; }
+        .frac-num { border-bottom: 1px solid currentColor; padding: 0 4px 2px; line-height: 1.2; }
+        .frac-den { padding: 2px 4px 0; line-height: 1.2; }
+        .sqrt { white-space: nowrap; }
+        .sqrt-content { border-top: 1px solid currentColor; padding: 0 3px; margin-left: 2px; }
+        sup, sub { font-size: 0.75em; }
+        sup { vertical-align: super; }
+        sub { vertical-align: sub; }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .question-text { font-size: 1.1rem; }
+            .option-btn { padding: 12px 15px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs>
+                    <style>.cls-1 { fill: #7d1111; }</style>
+                  </defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <g>
+                        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                      </g>
+                      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                    </g>
+                  </g>
+                </svg>
+            </div>
+            <div class="test-title">Експрес-контроль знань</div>
+            <div class="test-subtitle">Тема. Корінь n-го степеня. Ірраціональні вирази</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Розминка перед уроком</h1>
+            <p style="color: #666; font-size: 1.05rem;">Перевірте свої знання та налаштуйтеся на активну роботу!</p>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 10</li>
+                    <li><strong>Час проходження:</strong> 10 хвилин</li>
+                    <li><strong>Рівень складності:</strong> середній</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Progress Area with 10 Min Timer -->
+        <div id="progress-container" class="progress-container">
+            <div class="progress-header">
+                <span id="question-number">Питання 1 з 10</span>
+                <div class="timer-badge">
+                    <span>⏱️</span>
+                    <span id="timer-display">10:00</span>
+                </div>
+                <span id="score-live">Бали: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-box" class="question-box">
+            <div id="question-text" class="question-text"></div>
+            
+            <div id="hint-box" class="hint-box">
+                <button class="hint-toggle" onclick="document.getElementById('hint-box').classList.toggle('show')">
+                    💡 Підказка
+                </button>
+                <div id="hint-content" class="hint-content"></div>
+            </div>
+
+            <div id="options-list" class="options-list"></div>
+            <div id="feedback-box" class="feedback-box"></div>
+            
+            <div class="actions-right">
+                <button id="next-btn" class="btn-primary" disabled>Наступне запитання</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <div id="results-message" class="results-message">Чудова робота!</div>
+            
+            <div class="score-badge">
+                <span id="final-score" class="score-num">0/10</span>
+                <span class="score-total">правильних</span>
+            </div>
+
+            <p id="results-desc" class="results-desc">Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!</p>
+
+            <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const rawQuizData = [
+            // POOL 1 (Questions 1 - 10)
+            [
+                {
+                    question: "Обчисліть значення виразу <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>81</span></span></span>.",
+                    hint: "Згадайте, яке додатне число при множенні саме на себе чотири рази дасть 81.",
+                    options: [
+                        {label: "A", text: "<span class='math'>-3</span>", isCorrect: false, rationale: "Результатом арифметичного кореня парного степеня не може бути від’ємне число."},
+                        {label: "B", text: "<span class='math'>3</span>", isCorrect: true, rationale: "Число 3, піднесене до четвертого степеня, дає 81 (<span class='math'>3<sup>4</sup> = 81</span>), і оскільки це арифметичний корінь, результат має бути невід’ємним."},
+                        {label: "C", text: "<span class='math'>20.25</span>", isCorrect: false, rationale: "Це результат ділення 81 на 4, що є поширеною помилкою при обчисленні коренів."},
+                        {label: "D", text: "<span class='math'>9</span>", isCorrect: false, rationale: "Це значення квадратного кореня (другого степеня) з 81, а не четвертого."}
+                    ]
+                },
+                {
+                    question: "Знайдіть значення виразу <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>-27</span></span></span>.",
+                    hint: "Чи існують корені непарного степеня з від’ємних чисел?",
+                    options: [
+                        {label: "A", text: "<span class='math'>3</span>", isCorrect: false, rationale: "Додатне число у кубі дасть додатний результат, а під коренем маємо <span class='math'>-27</span>."},
+                        {label: "B", text: "<span class='math'>-3</span>", isCorrect: true, rationale: "Для непарного показника (3) корінь існує з від’ємного числа, і <span class='math'>(-3)<sup>3</sup> = -27</span>."},
+                        {label: "C", text: "не існує", isCorrect: false, rationale: "Корінь не існує лише з від’ємних чисел при парному показнику; для непарного показника він завжди визначений."},
+                        {label: "D", text: "<span class='math'>-9</span>", isCorrect: false, rationale: "Тут число помилково розділили на 3 замість знаходження кубічного кореня."}
+                    ]
+                },
+                {
+                    question: "Подайте вираз <span class='math'>a<sup>2/3</sup></span> у вигляді кореня (<span class='math'>a &gt; 0</span>).",
+                    hint: "Пам’ятайте: знаменник дробу в показнику відповідає за степінь самого кореня.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>a</span></span></span>", isCorrect: false, rationale: "Тут чисельник і знаменник помилково додали замість правильного перетворення."},
+                        {label: "B", text: "<span class='math'>a · <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>a</span></span></span>", isCorrect: false, rationale: "Цей вираз тотожний <span class='math'>a<sup>4/3</sup></span>, що не відповідає умові."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>a<sup>2</sup></span></span></span>", isCorrect: true, rationale: "За визначенням степеня з раціональним показником, знаменник дробу стає показником кореня, а чисельник — степенем підкореневого виразу."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>2</sup>√<span class='sqrt-content'>a<sup>3</sup></span></span></span>", isCorrect: false, rationale: "Тут показник кореня та степінь виразу переплутані місцями."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span> · <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>4</span></span></span>.",
+                    hint: "Використайте властивість добутку коренів з однаковим показником.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>6</sup>√<span class='sqrt-content'>8</span></span></span>", isCorrect: false, rationale: "Показники коренів були помилково додані при множенні виразів."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Числа під коренем були додані, а не перемножені."},
+                        {label: "C", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це результат, якщо помилково обчислити <span class='math'><span class='sqrt'>√<span class='sqrt-content'>16</span></span></span> або неправильно перемножити показники."},
+                        {label: "D", text: "<span class='math'>2</span>", isCorrect: true, rationale: "За властивістю добутку коренів <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span> · <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>4</span></span> = <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2 · 4</span></span> = <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>8</span></span> = 2</span>."}
+                    ]
+                },
+                {
+                    question: "Знайдіть значення частки <span class='math'><span class='frac'><span class='frac-num'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>32</span></span></span><span class='frac-den'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>2</span></span></span></span></span>.",
+                    hint: "Об’єднайте два корені в один за властивістю ділення.",
+                    options: [
+                        {label: "A", text: "<span class='math'>16</span>", isCorrect: false, rationale: "Це результат ділення 32 на 2 без врахування операції добування кореня."},
+                        {label: "B", text: "<span class='math'>2</span>", isCorrect: true, rationale: "За властивістю частки коренів <span class='math'><span class='frac'><span class='frac-num'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>32</span></span></span><span class='frac-den'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>2</span></span></span></span> = <span class='sqrt'><sup>4</sup>√<span class='sqrt-content'><span class='frac'><span class='frac-num'>32</span><span class='frac-den'>2</span></span></span></span> = <span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>16</span></span> = 2</span>."},
+                        {label: "C", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення <span class='math'><span class='sqrt'>√<span class='sqrt-content'>16</span></span></span>, але нам потрібен корінь четвертого степеня."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>30</span></span></span>", isCorrect: false, rationale: "Числа під коренем були відняті замість того, щоб бути поділеними."}
+                    ]
+                },
+                {
+                    question: "Спростіть вираз <span class='math'><span class='sqrt'>√<span class='sqrt-content'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>64</span></span></span></span></span>.",
+                    hint: "При взятті кореня з кореня їхні показники перемножуються.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>8</span></span></span>", isCorrect: false, rationale: "Хоча <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>8</span></span> = 2</span>, це проміжний етап, а не найбільш спрощена числова відповідь."},
+                        {label: "B", text: "<span class='math'>2</span>", isCorrect: true, rationale: "За властивістю 'корінь з кореня' отримуємо <span class='math'><span class='sqrt'><sup>6</sup>√<span class='sqrt-content'>64</span></span> = 2</span>."},
+                        {label: "C", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це результат, якщо обчислити лише внутрішній або лише зовнішній корінь неправильно."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>64</span></span></span>", isCorrect: false, rationale: "Показники коренів були додані (<span class='math'>2 + 3</span>) замість перемноження."}
+                    ]
+                },
+                {
+                    question: "Винесіть множник з-під знака кореня: <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>16</span></span></span>.",
+                    hint: "Розкладіть 16 на множники, один з яких є точним кубом.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span></span>", isCorrect: true, rationale: "Оскільки <span class='math'>16 = 8 · 2 = 2<sup>3</sup> · 2</span>, то кубічний корінь із <span class='math'>2<sup>3</sup></span> виноситься як 2."},
+                        {label: "B", text: "<span class='math'>4<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>1</span></span></span>", isCorrect: false, rationale: "Число 16 розклали як <span class='math'>4 · 4</span>, але для кубічного кореня потрібен третій степінь."},
+                        {label: "C", text: "<span class='math'>2<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>8</span></span></span>", isCorrect: false, rationale: "Тут множники переплутані: винесено правильне число, але під коренем залишили куб."},
+                        {label: "D", text: "<span class='math'>8<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span></span>", isCorrect: false, rationale: "Множник 8 винесли без добування з нього кубічного кореня."}
+                    ]
+                },
+                {
+                    question: "Внесіть множник під знак кореня: <span class='math'>2<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>3</span></span></span>.",
+                    hint: "Щоб внести число під корінь степеня n, його треба піднести до цього ж степеня n.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>24</span></span></span>", isCorrect: true, rationale: "При внесенні під кубічний корінь число 2 підноситься до куба: <span class='math'>2<sup>3</sup> · 3 = 8 · 3 = 24</span>."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>12</span></span></span>", isCorrect: false, rationale: "Число 2 піднесли до квадрата замість куба."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>18</span></span></span>", isCorrect: false, rationale: "Тут 3 піднесли до квадрата і помножили на 2, що є невірною процедурою."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Число 2 просто перемножили з 3, не підносячи його до степеня."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>(-2)<sup>4</sup></span></span></span>.",
+                    hint: "Для парних показників корінь зі степеня завжди дорівнює модулю основи.",
+                    options: [
+                        {label: "A", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це результат піднесення <span class='math'>-2</span> до квадрата, що не відповідає добуванню кореня 4-го степеня."},
+                        {label: "B", text: "<span class='math'>2</span>", isCorrect: true, rationale: "За тотожністю <span class='math'><span class='sqrt'><sup>2k</sup>√<span class='sqrt-content'>a<sup>2k</sup></span></span> = |a|</span>, маємо <span class='math'>|-2| = 2</span>."},
+                        {label: "C", text: "<span class='math'>-2</span>", isCorrect: false, rationale: "Корінь парного степеня за визначенням не може бути від’ємним числом."},
+                        {label: "D", text: "не існує", isCorrect: false, rationale: "Вираз існує, оскільки <span class='math'>(-2)<sup>4</sup> = 16</span>, що є додатним числом."}
+                    ]
+                },
+                {
+                    question: "Звільніться від ірраціональності в знаменнику: <span class='math'><span class='frac'><span class='frac-num'>6</span><span class='frac-den'><span class='sqrt'>√<span class='sqrt-content'>3</span></span></span></span></span>.",
+                    hint: "Помножте чисельник і знаменник на той самий корінь, що стоїть у знаменнику.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Помилково скоротили <span class='math'><span class='sqrt'>√<span class='sqrt-content'>3</span></span></span> і 6, ігноруючи знак кореня."},
+                        {label: "B", text: "<span class='math'>6<span class='sqrt'>√<span class='sqrt-content'>3</span></span></span>", isCorrect: false, rationale: "Забули поділити на результат множення коренів у знаменнику."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>2</span></span></span>", isCorrect: false, rationale: "Число 6 поділили на 3 і залишили під спільним коренем, що є невірним."},
+                        {label: "D", text: "<span class='math'>2<span class='sqrt'>√<span class='sqrt-content'>3</span></span></span>", isCorrect: true, rationale: "Домноживши чисельник і знаменник на <span class='math'><span class='sqrt'>√<span class='sqrt-content'>3</span></span></span>, отримаємо <span class='math'><span class='frac'><span class='frac-num'>6<span class='sqrt'>√<span class='sqrt-content'>3</span></span></span><span class='frac-den'>3</span></span> = 2<span class='sqrt'>√<span class='sqrt-content'>3</span></span></span>."}
+                    ]
+                }
+            ],
+            // POOL 2 (Questions 11 - 20)
+            [
+                {
+                    question: "Обчисліть значення виразу <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>625</span></span></span>.",
+                    hint: "Яке число потрібно піднести до четвертого степеня, щоб отримати 625?",
+                    options: [
+                        {label: "A", text: "<span class='math'>125</span>", isCorrect: false, rationale: "Це результат ділення 625 на 5, а не знаходження кореня."},
+                        {label: "B", text: "<span class='math'>25</span>", isCorrect: false, rationale: "Це квадратний корінь з 625, а не корінь четвертого степеня."},
+                        {label: "C", text: "<span class='math'>-5</span>", isCorrect: false, rationale: "Арифметичний корінь парного степеня завжди є невід’ємним."},
+                        {label: "D", text: "<span class='math'>5</span>", isCorrect: true, rationale: "Число 5 у четвертому степені дорівнює 625 (<span class='math'>5<sup>4</sup> = 625</span>)."}
+                    ]
+                },
+                {
+                    question: "Знайдіть значення виразу <span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>-32</span></span></span>.",
+                    hint: "Зверніть увагу на непарність показника кореня.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Додатне число у будь-якому степені не може дати від’ємне число <span class='math'>-32</span>."},
+                        {label: "B", text: "<span class='math'>-2</span>", isCorrect: true, rationale: "Показник кореня (5) непарний, тому <span class='math'>(-2)<sup>5</sup> = -32</span>."},
+                        {label: "C", text: "не існує", isCorrect: false, rationale: "Корені непарного степеня існують для будь-яких дійсних чисел."},
+                        {label: "D", text: "<span class='math'>-6.4</span>", isCorrect: false, rationale: "Це результат ділення -32 на 5."}
+                    ]
+                },
+                {
+                    question: "Запишіть вираз <span class='math'>b<sup>3/4</sup></span> у вигляді кореня (<span class='math'>b &gt; 0</span>).",
+                    hint: "Використовуйте правило: <span class='math'>a<sup>m/n</sup> = <span class='sqrt'><sup>n</sup>√<span class='sqrt-content'>a<sup>m</sup></span></span></span>.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>b</span></span></span>", isCorrect: false, rationale: "Втрачено чисельник (степінь) підкореневого виразу."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>b<sup>3</sup></span></span></span>", isCorrect: true, rationale: "Знаменник показника степеня (4) визначає степінь кореня, а чисельник (3) — степінь числа під коренем."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>b<sup>4</sup></span></span></span>", isCorrect: false, rationale: "Показник кореня та степінь виразу переплутані місцями."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>7</sup>√<span class='sqrt-content'>b</span></span></span>", isCorrect: false, rationale: "Чисельник і знаменник були помилково додані."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>8</span></span> · <span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>2</span></span></span>.",
+                    hint: "Перемножте числа під спільним знаком кореня четвертого степеня.",
+                    options: [
+                        {label: "A", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення квадратного кореня з 16, а не четвертого степеня."},
+                        {label: "B", text: "<span class='math'>2</span>", isCorrect: true, rationale: "Добуток коренів дорівнює <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>8 · 2</span></span> = <span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>16</span></span> = 2</span>."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>10</span></span></span>", isCorrect: false, rationale: "Підкореневі вирази були помилково додані замість множення."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>8</sup>√<span class='sqrt-content'>16</span></span></span>", isCorrect: false, rationale: "Показники коренів були додані при множенні."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='frac'><span class='frac-num'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>250</span></span></span><span class='frac-den'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span></span></span></span>.",
+                    hint: "Розділіть числа під одним кубічним коренем.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>248</span></span></span>", isCorrect: false, rationale: "Виконано віднімання підкореневих виразів замість ділення."},
+                        {label: "B", text: "<span class='math'>5</span>", isCorrect: true, rationale: "Відповідно до властивості частки коренів: <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'><span class='frac'><span class='frac-num'>250</span><span class='frac-den'>2</span></span></span></span> = <span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>125</span></span> = 5</span>."},
+                        {label: "C", text: "<span class='math'>25</span>", isCorrect: false, rationale: "Це результат квадратного кореня з 625 або іншої помилкової операції."},
+                        {label: "D", text: "<span class='math'>125</span>", isCorrect: false, rationale: "Виконано лише ділення підкореневих виразів без добування кореня."}
+                    ]
+                },
+                {
+                    question: "Спростіть вираз <span class='math'><span class='sqrt'>√<span class='sqrt-content'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>256</span></span></span></span></span>.",
+                    hint: "Помножте показники коренів (пам’ятайте, що звичайний корінь має показник 2).",
+                    options: [
+                        {label: "A", text: "<span class='math'>16</span>", isCorrect: false, rationale: "Це значення квадратного кореня з 256, тобто обчислено лише зовнішній корінь."},
+                        {label: "B", text: "<span class='math'>2</span>", isCorrect: true, rationale: "Корінь з кореня дає <span class='math'><span class='sqrt'><sup>8</sup>√<span class='sqrt-content'>256</span></span> = 2</span>."},
+                        {label: "C", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення кореня четвертого степеня з 256, тобто обчислено лише внутрішній корінь."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>6</sup>√<span class='sqrt-content'>256</span></span></span>", isCorrect: false, rationale: "Показники коренів (2 і 4) були додані замість множення."}
+                    ]
+                },
+                {
+                    question: "Винесіть множник з-під знака кореня: <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>24</span></span></span>.",
+                    hint: "Знайдіть серед множників числа 24 найбільший повний куб.",
+                    options: [
+                        {label: "A", text: "<span class='math'>3<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span></span>", isCorrect: false, rationale: "Множники помилково поміняли місцями."},
+                        {label: "B", text: "<span class='math'>8<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>3</span></span></span>", isCorrect: false, rationale: "Множник 8 винесли без операції добування кореня."},
+                        {label: "C", text: "<span class='math'>2<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>3</span></span></span>", isCorrect: true, rationale: "Розкладемо 24 як <span class='math'>8 · 3</span>. Тоді кубічний корінь з 8 дорівнює 2, а 3 залишається під коренем."},
+                        {label: "D", text: "<span class='math'>4<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Неправильне розкладання на множники для кубічного степеня."}
+                    ]
+                },
+                {
+                    question: "Внесіть множник під знак кореня: <span class='math'>3<span class='sqrt'>√<span class='sqrt-content'>2</span></span></span>.",
+                    hint: "Піднесіть трійку до другого степеня перед тим, як помножити її на двійку під коренем.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>36</span></span></span>", isCorrect: false, rationale: "Тут обидва числа піднесли до квадрата і перемножили (<span class='math'>9 · 4</span>)."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Множник 3 просто помножили на 2 без піднесення до степеня."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>18</span></span></span>", isCorrect: true, rationale: "Для внесення під квадратний корінь число 3 підносимо до квадрата: <span class='math'>3<sup>2</sup> · 2 = 9 · 2 = 18</span>."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>12</span></span></span>", isCorrect: false, rationale: "Число 3 помилково додали до 9 або виконали іншу невірну арифметичну дію."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>(-5)<sup>4</sup></span></span></span>.",
+                    hint: "Не забудьте про використання модуля при парному показнику кореня.",
+                    options: [
+                        {label: "A", text: "<span class='math'>25</span>", isCorrect: false, rationale: "Результат степеня був помилково зведений до квадрата."},
+                        {label: "B", text: "<span class='math'>5</span>", isCorrect: true, rationale: "За основною тотожністю <span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>a<sup>4</sup></span></span> = |a|</span>, отже <span class='math'>|-5| = 5</span>."},
+                        {label: "C", text: "<span class='math'>-25</span>", isCorrect: false, rationale: "Це неможливе значення для арифметичного кореня парного степеня."},
+                        {label: "D", text: "<span class='math'>-5</span>", isCorrect: false, rationale: "Це корінь парного степеня, він завжди повертає невід’ємне значення (модуль)."}
+                    ]
+                },
+                {
+                    question: "Звільніться від ірраціональності в знаменнику: <span class='math'><span class='frac'><span class='frac-num'>10</span><span class='frac-den'><span class='sqrt'>√<span class='sqrt-content'>5</span></span></span></span></span>.",
+                    hint: "Помножте весь дріб на корінь із п’яти.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Помилково скоротили 10 і 5, повністю відкинувши корінь."},
+                        {label: "B", text: "<span class='math'>10<span class='sqrt'>√<span class='sqrt-content'>5</span></span></span>", isCorrect: false, rationale: "Забули поділити чисельник на число, що утворилося в знаменнику (5)."},
+                        {label: "C", text: "<span class='math'>5<span class='sqrt'>√<span class='sqrt-content'>2</span></span></span>", isCorrect: false, rationale: "Множники в результаті були переплутані."},
+                        {label: "D", text: "<span class='math'>2<span class='sqrt'>√<span class='sqrt-content'>5</span></span></span>", isCorrect: true, rationale: "Домножуємо на корінь з 5: <span class='math'><span class='frac'><span class='frac-num'>10<span class='sqrt'>√<span class='sqrt-content'>5</span></span></span><span class='frac-den'>5</span></span> = 2<span class='sqrt'>√<span class='sqrt-content'>5</span></span></span>."}
+                    ]
+                }
+            ],
+            // POOL 3 (Questions 21 - 30)
+            [
+                {
+                    question: "Обчисліть значення виразу <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>125</span></span></span>.",
+                    hint: "Яке число при множенні саме на себе тричі дасть 125?",
+                    options: [
+                        {label: "A", text: "<span class='math'>5</span>", isCorrect: true, rationale: "Число 5 у третьому степені (<span class='math'>5<sup>3</sup></span>) дорівнює 125."},
+                        {label: "B", text: "<span class='math'>25</span>", isCorrect: false, rationale: "Це результат квадратного кореня з 625 або <span class='math'>5<sup>2</sup></span>, а не кубічний корінь."},
+                        {label: "C", text: "<span class='math'>15</span>", isCorrect: false, rationale: "Помилкове припущення, що подібна дія дасть 125."},
+                        {label: "D", text: "<span class='math'>-5</span>", isCorrect: false, rationale: "Під коренем стоїть додатне число, тому результат також має бути додатним."}
+                    ]
+                },
+                {
+                    question: "Знайдіть значення виразу <span class='math'><span class='sqrt'><sup>7</sup>√<span class='sqrt-content'>-1</span></span></span>.",
+                    hint: "Згадайте властивість кореня непарного степеня з -1.",
+                    options: [
+                        {label: "A", text: "<span class='math'>-1</span>", isCorrect: true, rationale: "Для будь-якого непарного степеня <span class='math'>(-1)<sup>n</sup> = -1</span>."},
+                        {label: "B", text: "<span class='math'>0</span>", isCorrect: false, rationale: "Нуль у будь-якому степені залишається нулем."},
+                        {label: "C", text: "не існує", isCorrect: false, rationale: "Корінь непарного степеня (7) з від’ємного числа завжди існує."},
+                        {label: "D", text: "<span class='math'>1</span>", isCorrect: false, rationale: "Одиниця в будь-якому степені дає 1, а не -1."}
+                    ]
+                },
+                {
+                    question: "Подайте вираз <span class='math'>c<sup>5/2</sup></span> у вигляді кореня (<span class='math'>c &gt; 0</span>).",
+                    hint: "Знаменник дробу стає показником кореня, а чисельник — показником степеня основи.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>c</span></span></span>", isCorrect: false, rationale: "Знаменник показника степеня був повністю проігнорований."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>c<sup>5</sup></span></span></span>", isCorrect: true, rationale: "Знаменник 2 відповідає за квадратний корінь, а чисельник 5 — за степінь під коренем."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>c<sup>2</sup></span></span></span>", isCorrect: false, rationale: "Показник кореня та степінь виразу переплутані."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>2.5</sup>√<span class='sqrt-content'>c</span></span></span>", isCorrect: false, rationale: "Показник кореня не записується у вигляді десяткового дробу в стандартній формі кореня."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>4</span></span> · <span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>8</span></span></span>.",
+                    hint: "Перемножте числа 4 та 8 під спільним коренем п’ятого степеня.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>10</sup>√<span class='sqrt-content'>32</span></span></span>", isCorrect: false, rationale: "Показники коренів були помилково додані."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>12</span></span></span>", isCorrect: false, rationale: "Числа під коренем були додані замість перемноження."},
+                        {label: "C", text: "<span class='math'>2</span>", isCorrect: true, rationale: "За властивістю добутку <span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>4 · 8</span></span> = <span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>32</span></span> = 2</span>."},
+                        {label: "D", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення кореня іншого степеня."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='frac'><span class='frac-num'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>64</span></span></span><span class='frac-den'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>2</span></span></span></span></span>.",
+                    hint: "Скористайтеся правилом ділення коренів з однаковим показником.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2</span>", isCorrect: true, rationale: "Частка коренів дорівнює <span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'><span class='frac'><span class='frac-num'>64</span><span class='frac-den'>2</span></span></span></span> = <span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>32</span></span> = 2</span>."},
+                        {label: "B", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення виразу не відповідає даному обчисленню."},
+                        {label: "C", text: "<span class='math'>32</span>", isCorrect: false, rationale: "Виконано ділення 64 на 2, але забуто про добування кореня."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>62</span></span></span>", isCorrect: false, rationale: "Підкореневі вирази були відняті замість ділення."}
+                    ]
+                },
+                {
+                    question: "Спростіть вираз <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'><span class='sqrt'>√<span class='sqrt-content'>64</span></span></span></span></span>.",
+                    hint: "Знайдіть спільний показник, перемноживши 3 на 2.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>5</sup>√<span class='sqrt-content'>64</span></span></span>", isCorrect: false, rationale: "Показники коренів були додані (<span class='math'>3 + 2</span>), а не перемножені."},
+                        {label: "B", text: "<span class='math'>4</span>", isCorrect: false, rationale: "Це значення кубічного кореня з 64, тобто враховано лише зовнішній корінь."},
+                        {label: "C", text: "<span class='math'>8</span>", isCorrect: false, rationale: "Це значення квадратного кореня з 64, тобто враховано лише внутрішній корінь."},
+                        {label: "D", text: "<span class='math'>2</span>", isCorrect: true, rationale: "Перемноживши показники коренів (3 та 2), маємо <span class='math'><span class='sqrt'><sup>6</sup>√<span class='sqrt-content'>64</span></span> = 2</span>."}
+                    ]
+                },
+                {
+                    question: "Винесіть множник з-під знака кореня: <span class='math'><span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>54</span></span></span>.",
+                    hint: "Число 54 можна представити як 27 · 2. Чому дорівнює кубічний корінь з 27?",
+                    options: [
+                        {label: "A", text: "<span class='math'>3<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Тут <span class='math'>3<sup>3</sup> · 6 = 162</span>, що не відповідає початковому числу 54."},
+                        {label: "B", text: "<span class='math'>9<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>6</span></span></span>", isCorrect: false, rationale: "Неправильне розкладання на множники; 9 не є кубом цілого числа."},
+                        {label: "C", text: "<span class='math'>2<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>3</span></span></span>", isCorrect: false, rationale: "Множники були переплутані при винесенні."},
+                        {label: "D", text: "<span class='math'>3<span class='sqrt'><sup>3</sup>√<span class='sqrt-content'>2</span></span></span>", isCorrect: true, rationale: "Оскільки <span class='math'>54 = 27 · 2 = 3<sup>3</sup> · 2</span>, то число 3 виноситься з-під кубічного кореня."}
+                    ]
+                },
+                {
+                    question: "Внесіть множник під знак кореня: <span class='math'>2<span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>2</span></span></span>.",
+                    hint: "Піднесіть двійку зовні до четвертого степеня перед множенням на двійку всередині.",
+                    options: [
+                        {label: "A", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>8</span></span></span>", isCorrect: false, rationale: "Число 2 піднесли до квадрата замість четвертого степеня."},
+                        {label: "B", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>32</span></span></span>", isCorrect: true, rationale: "При внесенні під корінь 4-го степеня: <span class='math'>2<sup>4</sup> · 2 = 16 · 2 = 32</span>."},
+                        {label: "C", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>4</span></span></span>", isCorrect: false, rationale: "Множник 2 просто перемножили з підкореневим числом без піднесення до степеня."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'><sup>4</sup>√<span class='sqrt-content'>16</span></span></span>", isCorrect: false, rationale: "Це лише <span class='math'>2<sup>4</sup></span>, втрачено множник 2, який вже був під коренем."}
+                    ]
+                },
+                {
+                    question: "Обчисліть <span class='math'><span class='sqrt'><sup>8</sup>√<span class='sqrt-content'>(-10)<sup>8</sup></span></span></span>.",
+                    hint: "Пам’ятайте правило про модуль при добуванні кореня парного степеня.",
+                    options: [
+                        {label: "A", text: "<span class='math'>-10</span>", isCorrect: false, rationale: "Для парного показника кореня результат завжди має бути невід’ємним (модуль)."},
+                        {label: "B", text: "не існує", isCorrect: false, rationale: "Вираз існує, оскільки <span class='math'>(-10)<sup>8</sup></span> — це додатне число."},
+                        {label: "C", text: "<span class='math'>10</span>", isCorrect: true, rationale: "Згідно з тотожністю <span class='math'><span class='sqrt'><sup>2k</sup>√<span class='sqrt-content'>a<sup>2k</sup></span></span> = |a|</span>, отримуємо <span class='math'>|-10| = 10</span>."},
+                        {label: "D", text: "<span class='math'>100</span>", isCorrect: false, rationale: "Це значення <span class='math'>10<sup>2</sup></span>, що не є результатом добування кореня 8-го степеня."}
+                    ]
+                },
+                {
+                    question: "Звільніться від ірраціональності в знаменнику: <span class='math'><span class='frac'><span class='frac-num'>14</span><span class='frac-den'><span class='sqrt'>√<span class='sqrt-content'>7</span></span></span></span></span>.",
+                    hint: "Помножте чисельник і знаменник на корінь із семи.",
+                    options: [
+                        {label: "A", text: "<span class='math'>2<span class='sqrt'>√<span class='sqrt-content'>7</span></span></span>", isCorrect: true, rationale: "Домножуємо на корінь з 7: <span class='math'><span class='frac'><span class='frac-num'>14<span class='sqrt'>√<span class='sqrt-content'>7</span></span></span><span class='frac-den'>7</span></span> = 2<span class='sqrt'>√<span class='sqrt-content'>7</span></span></span>."},
+                        {label: "B", text: "<span class='math'>7<span class='sqrt'>√<span class='sqrt-content'>2</span></span></span>", isCorrect: false, rationale: "Числа в результаті були переплутані місцями."},
+                        {label: "C", text: "<span class='math'>2</span>", isCorrect: false, rationale: "Помилкове скорочення 14 та 7 без урахування знака кореня."},
+                        {label: "D", text: "<span class='math'><span class='sqrt'>√<span class='sqrt-content'>14</span></span></span>", isCorrect: false, rationale: "Помилкова спроба об’єднати числа під спільним коренем."}
+                    ]
+                }
+            ]
+        ];
+
+        let poolCounter = 0;
+        let currentPoolQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        
+        let timerInterval = null;
+        let totalSeconds = 600; // 10 minutes
+
+        const startScreen = document.getElementById('start-screen');
+        const questionBox = document.getElementById('question-box');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressContainer = document.getElementById('progress-container');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const hintBox = document.getElementById('hint-box');
+        const hintContent = document.getElementById('hint-content');
+        const optionsList = document.getElementById('options-list');
+        const feedbackBox = document.getElementById('feedback-box');
+        
+        const questionNumber = document.getElementById('question-number');
+        const scoreLive = document.getElementById('score-live');
+        const progressFill = document.getElementById('progress-fill');
+        const timerDisplay = document.getElementById('timer-display');
+        const finalScore = document.getElementById('final-score');
+        const resultsMessage = document.getElementById('results-message');
+        const resultsDesc = document.getElementById('results-desc');
+
+        function startTimer() {
+            totalSeconds = 600;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function initQuiz() {
+            const activePoolIndex = poolCounter % rawQuizData.length;
+            currentPoolQuestions = rawQuizData[activePoolIndex];
+            poolCounter++;
+
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            questionBox.style.display = 'block';
+            progressContainer.style.display = 'block';
+
+            scoreLive.textContent = `Бали: ${score}`;
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            selectedOptionIndex = null;
+            
+            questionNumber.textContent = `Питання ${currentQuestionIndex + 1} з 10`;
+            progressFill.style.width = `${((currentQuestionIndex) / 10) * 100}%`;
+            
+            questionText.innerHTML = `${currentQuestionIndex + 1}. ${currentQ.question}`;
+            hintContent.innerHTML = currentQ.hint;
+            hintBox.classList.remove('show');
+
+            optionsList.innerHTML = '';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            nextBtn.textContent = (currentQuestionIndex === 9) ? "Завершити тест" : "Наступне запитання";
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${opt.label}</span><span>${opt.text}</span>`;
+                btn.addEventListener('click', () => selectOption(idx));
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            if (selectedOptionIndex !== null) return;
+            
+            selectedOptionIndex = index;
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            const optionBtns = optionsList.querySelectorAll('.option-btn');
+            const chosenOption = currentQ.options[index];
+            const correctIndex = currentQ.options.findIndex(o => o.isCorrect);
+
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenOption.isCorrect) {
+                score++;
+                scoreLive.textContent = `Бали: ${score}`;
+                optionBtns[index].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerHTML = `<strong>✓ Правильно!</strong> ${chosenOption.rationale}`;
+            } else {
+                optionBtns[index].classList.add('wrong');
+                if (correctIndex !== -1) {
+                    optionBtns[correctIndex].classList.add('correct');
+                }
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerHTML = `<strong>✗ Невірно.</strong> ${chosenOption.rationale}`;
+            }
+
+            feedbackBox.style.display = 'block';
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            questionBox.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            finalScore.textContent = `${score}/10`;
+
+            if (score >= 9) {
+                resultsMessage.textContent = "Чудовий результат!";
+                resultsDesc.textContent = "Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!";
+            } else if (score >= 7) {
+                resultsMessage.textContent = "Добре впоралися!";
+                resultsDesc.textContent = "Ви непогано впоралися з тестуванням, але є над чим попрацювати!";
+            } else if (score >= 5) {
+                resultsMessage.textContent = "Непогано, але варто повторити теорію!";
+                resultsDesc.textContent = "Варто ще раз переглянути матеріали теми та закріпити навички.";
+            } else {
+                resultsMessage.textContent = "Потрібно ще попрацювати над темою!";
+                resultsDesc.textContent = "Рекомендуємо повторити теоретичний матеріал і спробувати пройти тест знову.";
+            }
+        }
+
+        startBtn.addEventListener('click', initQuiz);
+        nextBtn.addEventListener('click', handleNext);
+        restartBtn.addEventListener('click', initQuiz);
+    </script>
+</body>
+</html>
