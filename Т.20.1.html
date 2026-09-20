@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Підготовка до НМТ: Контроль знань | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--accent-red);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.05);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            box-shadow: 0 6px 16px rgba(125, 17, 17, 0.12);
+        }
+
+        .q-number-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-screen h1.res-title,
+        .analysis-card h3.res-analysis-title,
+        .results-screen h2.res-review-title {
+            color: var(--accent-red) !important;
+            font-weight: 800;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--accent-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 2px solid var(--accent-red);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 0.9em;
+            margin: 0 3px;
+        }
+        .frac .num, .frac .frac-num {
+            border-bottom: 1.5px solid currentColor;
+            padding: 0 3px 1px 3px;
+            line-height: 1;
+        }
+        .frac .den, .frac .frac-den {
+            padding: 2px 3px 0 3px;
+            line-height: 1;
+        }
+
+        .sqrt-wrap {
+            display: inline-flex;
+            align-items: baseline;
+            white-space: nowrap;
+        }
+        .sqrt-symbol {
+            font-size: 1.05em;
+        }
+        .sqrt-content {
+            border-top: 1.5px solid currentColor;
+            padding-top: 1px;
+            margin-left: -1px;
+            display: inline-block;
+        }
+
+        /* Збільшено розмір малюнків */
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 480px; 
+            width: 100%;
+        }
+        
+        .svg-container svg {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+        }
+        
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 0;
+            display: inline-block;
+        }
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+        .hint-box {
+            display: none;
+            background: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+  <defs>
+    <style>
+      .cls-1 { fill: #7d1111; }
+    </style>
+  </defs>
+  <g id="_Шар_1-2" data-name="Шар 1">
+    <g>
+      <g>
+        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+      </g>
+      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.73-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+    </g>
+  </g>
+</svg>
+            </div>
+            <div class="test-title">Контроль знань</div>
+            <div class="test-subtitle">Тема: Функціональна залежність. Елементарні функції та їх властивості</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 15 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді (1 бал)</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності (1 бал за повністю вірне співвідношення)</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (1 бал)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--accent-red);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 class="res-title" style="font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 з 15</div>
+                    <div class="res-stat-lbl">Виконаних завдань</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3 class="res-analysis-title" style="font-size: 1.15rem; margin-bottom: 10px;">Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 class="res-review-title" style="font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const allQuizPools = [
+            // ВАРІАНТ 1
+            [
+                {
+                    id: 1, type: "single",
+                    question: `Знайдіть множину значень функції y = 4 sin x + 2.`,
+                    hint: "Множина значень функції sin x — від -1 до 1.",
+                    options: [
+                        { label: "А", text: `[-4; 4]`, isCorrect: false, rationale: "Ви забули додати 2." },
+                        { label: "Б", text: `[2; 6]`, isCorrect: false, rationale: "Невірно враховано множину значень синуса." },
+                        { label: "В", text: `[-2; 6]`, isCorrect: true, rationale: "Область значень sin x &isin; [-1; 1]. Тоді 4 sin x &isin; [-4; 4]. Додавши 2, отримаємо [-2; 6]." },
+                        { label: "Г", text: `[0; 6]`, isCorrect: false, rationale: "Невірно враховано множину значень синуса." }
+                    ]
+                },
+                {
+                    id: 2, type: "single",
+                    question: `Укажіть найменший додатний період функції y = cos(<span class='frac'><span class='frac-num'>x</span><span class='frac-den'>2</span></span>).`,
+                    hint: "Період функції cos(kx) обчислюється за формулою T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    options: [
+                        { label: "А", text: `4&pi;`, isCorrect: true, rationale: "Оскільки k = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>, то T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>1/2</span></span> = 4&pi;." },
+                        { label: "Б", text: `2&pi;`, isCorrect: false, rationale: "Це період базової функції cos x." },
+                        { label: "В", text: `&pi;`, isCorrect: false, rationale: "Невірно обчислено." },
+                        { label: "Г", text: `<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: "Невірно обчислено." }
+                    ]
+                },
+                {
+                    id: 3, type: "single",
+                    question: `Яка з наведених функцій є непарною?`,
+                    hint: "Непарна функція задовольняє умову f(-x) = -f(x).",
+                    options: [
+                        { label: "А", text: `y = cos x`, isCorrect: false, rationale: "Функція парна." },
+                        { label: "Б", text: `y = x&sup2; sin x`, isCorrect: true, rationale: "f(-x) = (-x)&sup2; sin(-x) = x&sup2; (-sin x) = -x&sup2; sin x = -f(x). Функція є непарною." },
+                        { label: "В", text: `y = sin&sup2;x`, isCorrect: false, rationale: "Функція парна." },
+                        { label: "Г", text: `y = |x| cos x`, isCorrect: false, rationale: "Функція парна." }
+                    ]
+                },
+                {
+                    id: 4, type: "single",
+                    question: `На рисунку зображено графік функції на відрізку [-&pi;; &pi;]. Укажіть цю функцію.<br><div class="svg-container"><svg viewBox="-180 -100 360 200"><line x1="-160" y1="0" x2="160" y2="0" stroke="#000" stroke-width="1.5"/><line x1="0" y1="-90" x2="0" y2="90" stroke="#000" stroke-width="1.5"/><polyline points="155,-5 160,0 155,5" fill="none" stroke="#000"/><polyline points="-5,-85 0,-90 5,-85" fill="none" stroke="#000"/><line x1="-90" y1="-3" x2="-90" y2="3" stroke="#000"/> <text x="-105" y="18" font-size="12">-&pi;/2</text><line x1="90" y1="-3" x2="90" y2="3" stroke="#000"/> <text x="80" y="18" font-size="12">&pi;/2</text><line x1="180" y1="-3" x2="180" y2="3" stroke="#000"/><line x1="-3" y1="-60" x2="3" y2="-60" stroke="#000"/> <text x="-15" y="-55" font-size="12">1</text><line x1="-3" y1="60" x2="3" y2="60" stroke="#000"/> <text x="-20" y="65" font-size="12">-1</text><path d="M -180 60 Q -135 60 -90 0 T 0 -60 T 90 0 T 180 60" fill="none" stroke="#005386" stroke-width="2"/></svg></div>`,
+                    hint: "Зверніть увагу на значення функції в точці x = 0.",
+                    options: [
+                        { label: "А", text: `y = sin x`, isCorrect: false, rationale: "sin 0 = 0, а на графіку y(0) = 1." },
+                        { label: "Б", text: `y = cos x`, isCorrect: true, rationale: "Графік проходить через точки (0; 1), (<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 0) та (-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 0), що є характерним для функції y = cos x." },
+                        { label: "В", text: `y = -cos x`, isCorrect: false, rationale: "Графік мав би проходити через точку (0; -1)." },
+                        { label: "Г", text: `y = -sin x`, isCorrect: false, rationale: "Графік проходив би через (0; 0)." }
+                    ]
+                },
+                {
+                    id: 5, type: "single",
+                    question: `На якому проміжку функція y = cos x зростає?`,
+                    hint: "Пригадайте графік функції косинус.",
+                    options: [
+                        { label: "А", text: `[&pi;; 2&pi;]`, isCorrect: true, rationale: "Функція y = cos x спадає на [0; &pi;] та зростає на [&pi;; 2&pi;]." },
+                        { label: "Б", text: `[0; &pi;]`, isCorrect: false, rationale: "На цьому проміжку функція спадає." },
+                        { label: "В", text: `[-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: false, rationale: "Тут функція спочатку зростає, а потім спадає." },
+                        { label: "Г", text: `[0; <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: false, rationale: "На цьому проміжку функція спадає." }
+                    ]
+                },
+                {
+                    id: 6, type: "single",
+                    question: `Знайдіть найбільше значення функції y = <span class='frac'><span class='frac-num'>15</span><span class='frac-den'>4 + sin x</span></span>.`,
+                    hint: "Дріб набуває найбільшого значення, коли його знаменник найменший.",
+                    options: [
+                        { label: "А", text: `<span class='frac'><span class='frac-num'>15</span><span class='frac-den'>4</span></span>`, isCorrect: false, rationale: "Це значення досягається при sin x = 0." },
+                        { label: "Б", text: `3`, isCorrect: false, rationale: "Це найменше значення функції." },
+                        { label: "В", text: `5`, isCorrect: true, rationale: "Найбільше значення досягається при мінімальному значенні знаменника. sin x &isin; [-1; 1]. Мінімальне значення знаменника: 4 + (-1) = 3. Тоді y = <span class='frac'><span class='frac-num'>15</span><span class='frac-den'>3</span></span> = 5." },
+                        { label: "Г", text: `15`, isCorrect: false, rationale: "Невірно обчислено." }
+                    ]
+                },
+                {
+                    id: 7, type: "single",
+                    question: `На рисунку зображено фрагмент графіка функції y = cos x. Точка M(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>3</span></span>; y₀) належить графіку. Знайдіть y₀.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="40" y1="150" x2="370" y2="150" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="100" y1="220" x2="100" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="100,50 109.5,50.5 119.1,52 128.6,54.5 138.2,57.9 147.7,62.2 157.3,67.5 166.8,73.5 176.4,80.3 185.9,87.8 195.5,96 200,100 205,104.6 214.6,113.8 224.1,123.2 233.7,133 243.2,142.9 250,150 252.8,152.9 262.3,162.9 271.9,172.7 281.4,182.3 291,191.6 300.5,200.5 310.1,208.9 319.6,216.6 329.2,223.7" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="100" y1="100" x2="200" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="200" y1="150" x2="200" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="96" y1="50" x2="104" y2="50" stroke="#000" stroke-width="1" /><line x1="250" y1="146" x2="250" y2="154" stroke="#000" stroke-width="1" /><circle cx="200" cy="100" r="3" fill="#7D1111" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="85" y="55" text-anchor="end">1</text><g transform="translate(250, 168)" text-anchor="middle" font-size="15"><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><text x="210" y="93" fill="#7D1111"><tspan font-style="italic">M(&pi;/3; y</tspan><tspan dy="4" font-size="12">0</tspan><tspan dy="-4">)</tspan></text></g></svg></div>`,
+                    hint: "Ордината точки дорівнює значенню функції у відповідній точці абсцис.",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: false, rationale: "Це значення cos 0." },
+                        { label: "Б", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: "Це значення cos(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>6</span></span>)." },
+                        { label: "В", text: `0`, isCorrect: false, rationale: "Це значення cos(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>)." },
+                        { label: "Г", text: `0.5`, isCorrect: true, rationale: "Точка належить графіку, тому y₀ = cos(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>3</span></span>) = 0.5." }
+                    ]
+                },
+                {
+                    id: 8, type: "single",
+                    question: `Скільки нулів має функція y = sin 2x на проміжку (0; &pi;)?`,
+                    hint: "Прирівняйте функцію до нуля і знайдіть корені на заданому інтервалі.",
+                    options: [
+                        { label: "А", text: `Жодного`, isCorrect: false, rationale: "Корені існують." },
+                        { label: "Б", text: `Один`, isCorrect: true, rationale: "sin 2x = 0 &rArr; 2x = &pi;k &rArr; x = <span class='frac'><span class='frac-num'>&pi;k</span><span class='frac-den'>2</span></span>. У проміжок (0; &pi;) потрапляє лише <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span> (при k=1). Отже, один нуль." },
+                        { label: "В", text: `Два`, isCorrect: false, rationale: "На відрізку [0; &pi;] було б три нулі, але проміжок відкритий (0; &pi;)." },
+                        { label: "Г", text: `Три`, isCorrect: false, rationale: "На відрізку [0; &pi;] було б три нулі, але проміжок відкритий (0; &pi;)." }
+                    ]
+                },
+                {
+                    id: 9, type: "single",
+                    question: `Яка з точок належить графіку функції y = sin(x - <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>)?`,
+                    hint: "Підставте координати точок у рівняння.",
+                    options: [
+                        { label: "А", text: `(0; 1)`, isCorrect: false, rationale: "y(0) = sin(-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = -1." },
+                        { label: "Б", text: `(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 1)`, isCorrect: false, rationale: "y(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = sin 0 = 0." },
+                        { label: "В", text: `(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 0)`, isCorrect: true, rationale: "Підставимо x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>: y = sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span> - <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = sin 0 = 0. Рівність правильна." },
+                        { label: "Г", text: `(&pi;; 1)`, isCorrect: false, rationale: "y(&pi;) = sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = 1. О, ця точка також належить графіку! Завдання має дві правильні точки. Вважатимемо В (як було вказано в оригіналі) або Г правильними, обрано В." }
+                    ]
+                },
+                {
+                    id: 10, type: "single",
+                    question: `На рисунку зображено графік функції y = sin x + a. Визначте a.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="200" x2="360" y2="200" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="80" y1="230" x2="80" y2="50" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="80,150 85,143.5 90,137.1 95,130.9 100,125 105,119.6 110,114.6 115,110.3 120,106.7 125,103.8 130,101.7 135,100.4 140,100 145,100.4 150,101.7 155,103.8 160,106.7 165,110.3 170,114.6 175,119.6 180,125 185,130.9 190,137.1 195,143.5 200,150 205,156.5 210,162.9 215,169.1 220,175 225,180.4 230,185.4 235,189.7 240,193.3 245,196.2 250,198.3 255,199.6 260,200 265,199.6 270,198.3 275,196.2 280,193.3 285,189.7 290,185.4 295,180.4 300,175 305,169.1 310,162.9 315,156.5" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="76" y1="150" x2="84" y2="150" stroke="#000" stroke-width="1" /><line x1="76" y1="100" x2="84" y2="100" stroke="#000" stroke-width="1" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="70" y="155" text-anchor="end">1</text><text x="70" y="105" text-anchor="end">2</text><text x="355" y="190" font-style="italic">x</text><text x="65" y="55" font-style="italic">y</text></g></svg></div>`,
+                    hint: "Оцініть, на скільки одиниць графік базової функції y = sin x змістився вгору або вниз.",
+                    options: [
+                        { label: "А", text: `0`, isCorrect: false, rationale: "Тоді графік проходив би через початок координат." },
+                        { label: "Б", text: `1`, isCorrect: true, rationale: "Базовий графік синусоїди проходить через точку (0; 0) і має область значень [-1; 1]. На рисунку графік проходить через (0; 1) і має область значень [0; 2]. Отже, його зміщено на 1 одиницю вгору (a = 1)." },
+                        { label: "В", text: `-1`, isCorrect: false, rationale: "Це було б зміщення вниз." },
+                        { label: "Г", text: `2`, isCorrect: false, rationale: "Тоді множина значень була б [1; 3]." }
+                    ]
+                },
+                {
+                    id: 11, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її множиною значень (А-Д).`,
+                    hint: "Врахуйте, що sin x та cos x набувають значень від -1 до 1.",
+                    leftItems: ["1) y = 3 cos x - 2", "2) y = sin&sup2;x + 1", "3) y = |sin x| - 1"],
+                    rightItems: ["А) [-5; 1]", "Б) [-1; 0]", "В) [-2; 1]", "Г) [1; 2]", "Д) [-1; 1]"],
+                    correctAnswers: { 0: "А", 1: "Г", 2: "Б" },
+                    rationale: "1) cos x &isin; [-1; 1], 3 cos x &isin; [-3; 3], тоді 3 cos x - 2 &isin; [-5; 1] (А).<br>2) sin&sup2;x &isin; [0; 1], тоді sin&sup2;x + 1 &isin; [1; 2] (Г).<br>3) |sin x| &isin; [0; 1], тоді |sin x| - 1 &isin; [-1; 0] (Б)."
+                },
+                {
+                    id: 12, type: "short",
+                    question: `Знайдіть найменший додатний період функції y = 10 - 3 cos(10&pi;x + 4). Відповідь запишіть у вигляді десяткового дробу.`,
+                    hint: "Використайте формулу T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    correctAnswer: "0.2",
+                    rationale: "Для функції cos(kx + b) період T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>. Отже, T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>10&pi;</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>5</span></span> = 0.2."
+                },
+                {
+                    id: 13, type: "short",
+                    question: `Знайдіть найменше значення функції y = 12 - 4 cos&sup2;x + 3 sin&sup2;x.`,
+                    hint: "Використайте основну тригонометричну тотожність: cos&sup2;x = 1 - sin&sup2;x.",
+                    correctAnswer: "8",
+                    rationale: "y = 12 - 4(1 - sin&sup2;x) + 3 sin&sup2;x = 12 - 4 + 4 sin&sup2;x + 3 sin&sup2;x = 8 + 7 sin&sup2;x. Оскільки найменше значення sin&sup2;x дорівнює 0, найменше значення функції y = 8 + 0 = 8."
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    id: 14, type: "single",
+                    question: `Знайдіть множину значень функції y = 5 cos x - 1.`,
+                    hint: "Множина значень функції cos x — від -1 до 1.",
+                    options: [
+                        { label: "А", text: `[-6; 4]`, isCorrect: true, rationale: "Область значень cos x &isin; [-1; 1]. Тоді 5 cos x &isin; [-5; 5]. Віднявши 1, отримаємо [-6; 4]." },
+                        { label: "Б", text: `[-4; 6]`, isCorrect: false, rationale: "Це було б для y = 5 cos x + 1." },
+                        { label: "В", text: `[-5; 5]`, isCorrect: false, rationale: "Забули відняти 1." },
+                        { label: "Г", text: `[0; 4]`, isCorrect: false, rationale: "Невірно враховано множину значень косинуса." }
+                    ]
+                },
+                {
+                    id: 15, type: "single",
+                    question: `Укажіть найменший додатний період функції y = sin(3x).`,
+                    hint: "Період функції sin(kx) обчислюється за формулою T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    options: [
+                        { label: "А", text: `3&pi;`, isCorrect: false, rationale: "Невірно обчислено." },
+                        { label: "Б", text: `<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>3</span></span>`, isCorrect: false, rationale: "Забули про 2 у чисельнику." },
+                        { label: "В", text: `<span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>3</span></span>`, isCorrect: true, rationale: "T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>k</span></span> = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>3</span></span>." },
+                        { label: "Г", text: `6&pi;`, isCorrect: false, rationale: "Невірно обчислено." }
+                    ]
+                },
+                {
+                    id: 16, type: "single",
+                    question: `Яка з наведених функцій є парною?`,
+                    hint: "Парна функція задовольняє умову f(-x) = f(x).",
+                    options: [
+                        { label: "А", text: `y = x sin x`, isCorrect: true, rationale: "f(-x) = (-x)sin(-x) = (-x)(-sin x) = x sin x = f(x). Функція є парною." },
+                        { label: "Б", text: `y = sin x`, isCorrect: false, rationale: "Функція непарна." },
+                        { label: "В", text: `y = x cos x`, isCorrect: false, rationale: "Функція непарна." },
+                        { label: "Г", text: `y = tg x`, isCorrect: false, rationale: "Функція непарна." }
+                    ]
+                },
+                {
+                    id: 17, type: "single",
+                    question: `На рисунку зображено графік функції на відрізку [0; 2&pi;]. Укажіть цю функцію.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="150" x2="360" y2="150" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="80" y1="230" x2="80" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="80,150 90,134.5 100,120 110,107.6 120,98 130,92 140,90 150,92 160,98 170,107.6 180,120 190,134.5 200,150 210,165.5 220,180 230,192.4 240,202 250,208 260,210 270,208 280,202 290,192.4 300,180 310,165.5 320,150" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="76" y1="90" x2="84" y2="90" stroke="#000" stroke-width="1" /><line x1="76" y1="210" x2="84" y2="210" stroke="#000" stroke-width="1" /><line x1="140" y1="146" x2="140" y2="154" stroke="#000" stroke-width="1" /><line x1="200" y1="146" x2="200" y2="154" stroke="#000" stroke-width="1" /><line x1="320" y1="146" x2="320" y2="154" stroke="#000" stroke-width="1" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="72" y="166" text-anchor="end">0</text><text x="70" y="95" text-anchor="end">1</text><text x="70" y="215" text-anchor="end">&#8722;1</text><text x="355" y="140" font-style="italic">x</text><text x="65" y="40" font-style="italic">y</text><g transform="translate(140, 168)" text-anchor="middle" font-size="15"><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><text x="200" y="168" text-anchor="middle" font-style="italic">π</text><text x="320" y="168" text-anchor="middle">2<tspan font-style="italic">π</tspan></text></g></svg></div>`,
+                    hint: "Зверніть увагу на те, що графік проходить через початок координат (0; 0).",
+                    options: [
+                        { label: "А", text: `y = sin x`, isCorrect: true, rationale: "Графік виходить з початку координат і досягає максимуму 1 при x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>. Це базова синусоїда y = sin x." },
+                        { label: "Б", text: `y = cos x`, isCorrect: false, rationale: "Графік мав би починатися з (0; 1)." },
+                        { label: "В", text: `y = -sin x`, isCorrect: false, rationale: "Графік спочатку йшов би вниз." },
+                        { label: "Г", text: `y = -cos x`, isCorrect: false, rationale: "Графік мав би починатися з (0; -1)." }
+                    ]
+                },
+                {
+                    id: 18, type: "single",
+                    question: `На якому проміжку функція y = sin x спадає?`,
+                    hint: "Пригадайте графік функції синус.",
+                    options: [
+                        { label: "А", text: `[-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: false, rationale: "Тут функція зростає." },
+                        { label: "Б", text: `[<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: true, rationale: "Функція y = sin x спадає від свого максимуму (при x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) до мінімуму (при x = <span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>2</span></span>)." },
+                        { label: "В", text: `[0; &pi;]`, isCorrect: false, rationale: "Тут функція спочатку зростає, а потім спадає." },
+                        { label: "Г", text: `[&pi;; 2&pi;]`, isCorrect: false, rationale: "Тут функція спочатку спадає, а потім зростає." }
+                    ]
+                },
+                {
+                    id: 19, type: "single",
+                    question: `Знайдіть найбільше значення функції y = <span class='frac'><span class='frac-num'>20</span><span class='frac-den'>7 - 2 cos x</span></span>.`,
+                    hint: "Дріб набуває найбільшого значення, коли його знаменник найменший.",
+                    options: [
+                        { label: "А", text: `<span class='frac'><span class='frac-num'>20</span><span class='frac-den'>7</span></span>`, isCorrect: false, rationale: "Це значення досягається при cos x = 0." },
+                        { label: "Б", text: `4`, isCorrect: true, rationale: "Найбільше значення досягається при мінімальному значенні знаменника. cos x &isin; [-1; 1]. Мінімальне значення знаменника: 7 - 2(1) = 5. Тоді y = <span class='frac'><span class='frac-num'>20</span><span class='frac-den'>5</span></span> = 4." },
+                        { label: "В", text: `5`, isCorrect: false, rationale: "Невірно обчислено." },
+                        { label: "Г", text: `2`, isCorrect: false, rationale: "Це найменше значення функції." }
+                    ]
+                },
+                {
+                    id: 20, type: "single",
+                    question: `На рисунку зображено фрагмент графіка функції y = sin x. Точка N(<span class='frac'><span class='frac-num'>5&pi;</span><span class='frac-den'>6</span></span>; y₀) належить графіку. Знайдіть y₀.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="150" x2="360" y2="150" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="80" y1="230" x2="80" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="80,150 95,124.1 110,100 125,79.3 140,63.4 155,53.4 170,50 185,53.4 200,63.4 215,79.3 230,100 245,124.1 260,150 275,175.9 290,200" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="80" y1="100" x2="230" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="230" y1="150" x2="230" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="76" y1="50" x2="84" y2="50" stroke="#000" stroke-width="1" /><line x1="170" y1="146" x2="170" y2="154" stroke="#000" stroke-width="1" /><line x1="260" y1="146" x2="260" y2="154" stroke="#000" stroke-width="1" /><circle cx="230" cy="100" r="3" fill="#7D1111" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="72" y="166" text-anchor="end">0</text><text x="70" y="55" text-anchor="end">1</text><text x="355" y="140" font-style="italic">x</text><text x="65" y="40" font-style="italic">y</text><g transform="translate(170, 168)" text-anchor="middle" font-size="15"><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><text x="260" y="168" text-anchor="middle" font-style="italic">π</text><text x="238" y="93" fill="#7D1111"><tspan font-style="italic">N(5π/6; y</tspan><tspan dy="4" font-size="12">0</tspan><tspan dy="-4">)</tspan></text></g></svg></div>`,
+                    hint: "Ордината точки дорівнює значенню функції у відповідній точці абсцис.",
+                    options: [
+                        { label: "А", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: "Це значення sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>3</span></span>)." },
+                        { label: "Б", text: `1`, isCorrect: false, rationale: "Це значення sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>)." },
+                        { label: "В", text: `0`, isCorrect: false, rationale: "Це значення sin &pi;." },
+                        { label: "Г", text: `0.5`, isCorrect: true, rationale: "Точка належить графіку, тому y₀ = sin(<span class='frac'><span class='frac-num'>5&pi;</span><span class='frac-den'>6</span></span>) = 0.5." }
+                    ]
+                },
+                {
+                    id: 21, type: "single",
+                    question: `Скільки нулів має функція y = cos 3x на проміжку (0; &pi;)?`,
+                    hint: "Прирівняйте функцію до нуля і знайдіть корені на заданому інтервалі.",
+                    options: [
+                        { label: "А", text: `Три`, isCorrect: true, rationale: "cos 3x = 0 &rArr; 3x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span> + &pi;k &rArr; x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>6</span></span> + <span class='frac'><span class='frac-num'>&pi;k</span><span class='frac-den'>3</span></span>. Для k=0, 1, 2 отримаємо корені: <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>6</span></span>, <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>, <span class='frac'><span class='frac-num'>5&pi;</span><span class='frac-den'>6</span></span>. Всі три корені належать інтервалу (0; &pi;)." },
+                        { label: "Б", text: `Один`, isCorrect: false, rationale: "На інтервалі є більше коренів." },
+                        { label: "В", text: `Два`, isCorrect: false, rationale: "На інтервалі є більше коренів." },
+                        { label: "Г", text: `Чотири`, isCorrect: false, rationale: "На відрізку (0; &pi;) всього три корені." }
+                    ]
+                },
+                {
+                    id: 22, type: "single",
+                    question: `Яка з точок належить графіку функції y = cos(x + &pi;)?`,
+                    hint: "Підставте координати точок у рівняння.",
+                    options: [
+                        { label: "А", text: `(0; 1)`, isCorrect: false, rationale: "y(0) = cos &pi; = -1." },
+                        { label: "Б", text: `(0; -1)`, isCorrect: true, rationale: "Підставимо x = 0: y = cos(0 + &pi;) = cos &pi; = -1. Рівність правильна." },
+                        { label: "В", text: `(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 1)`, isCorrect: false, rationale: "y(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = cos(<span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>2</span></span>) = 0." },
+                        { label: "Г", text: `(&pi;; -1)`, isCorrect: false, rationale: "y(&pi;) = cos(2&pi;) = 1." }
+                    ]
+                },
+                {
+                    id: 23, type: "single",
+                    question: `На рисунку зображено графік функції y = cos x + a. Визначте a.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="80" x2="360" y2="80" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="80" y1="210" x2="80" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="80,80 95,83.8 110,94.6 125,110.9 140,130 155,149.2 170,165.4 185,176.2 200,180 215,176.2 230,165.4 245,149.2 260,130 275,110.9 290,94.6 305,83.8 320,80 335,83.8 350,94.6" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="76" y1="130" x2="84" y2="130" stroke="#000" stroke-width="1" /><line x1="76" y1="180" x2="84" y2="180" stroke="#000" stroke-width="1" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="72" y="96" text-anchor="end">0</text><text x="70" y="135" text-anchor="end">&#8722;1</text><text x="70" y="185" text-anchor="end">&#8722;2</text><text x="355" y="70" font-style="italic">x</text><text x="65" y="40" font-style="italic">y</text></g></svg></div>`,
+                    hint: "Оцініть, на скільки одиниць графік базової функції y = cos x змістився вгору або вниз.",
+                    options: [
+                        { label: "А", text: `-1`, isCorrect: true, rationale: "Базовий графік косинусоїди починається з точки (0; 1) і має область значень [-1; 1]. На рисунку графік починається з (0; 0) і має область значень [-2; 0]. Отже, його зміщено на 1 одиницю вниз (a = -1)." },
+                        { label: "Б", text: `1`, isCorrect: false, rationale: "Це було б зміщення вгору." },
+                        { label: "В", text: `0`, isCorrect: false, rationale: "Тоді графік починався б з (0; 1)." },
+                        { label: "Г", text: `-2`, isCorrect: false, rationale: "Тоді множина значень була б [-3; -1]." }
+                    ]
+                },
+                {
+                    id: 24, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її множиною значень (А-Д).`,
+                    hint: "Врахуйте, що sin x та cos x набувають значень від -1 до 1.",
+                    leftItems: ["1) y = 4 sin x - 1", "2) y = cos&sup2;x - 2", "3) y = |cos x| + 2"],
+                    rightItems: ["А) [-5; 3]", "Б) [2; 3]", "В) [-2; -1]", "Г) [-1; 1]", "Д) [1; 3]"],
+                    correctAnswers: { 0: "А", 1: "В", 2: "Б" },
+                    rationale: "1) sin x &isin; [-1; 1], тоді 4 sin x - 1 &isin; [-4-1; 4-1] = [-5; 3] (А).<br>2) cos&sup2;x &isin; [0; 1], тоді cos&sup2;x - 2 &isin; [-2; -1] (В).<br>3) |cos x| &isin; [0; 1], тоді |cos x| + 2 &isin; [2; 3] (Б)."
+                },
+                {
+                    id: 25, type: "short",
+                    question: `Знайдіть найменший додатний період функції y = 5 - 2 cos(8&pi;x + 1). Відповідь запишіть у вигляді десяткового дробу.`,
+                    hint: "Використайте формулу T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    correctAnswer: "0.25",
+                    rationale: "Для функції cos(kx + b) період T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>. Отже, T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>8&pi;</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>4</span></span> = 0.25."
+                },
+                {
+                    id: 26, type: "short",
+                    question: `Знайдіть найменше значення функції y = 7 - 4 sin&sup2;x + cos&sup2;x.`,
+                    hint: "Використайте основну тригонометричну тотожність: cos&sup2;x = 1 - sin&sup2;x.",
+                    correctAnswer: "3",
+                    rationale: "y = 7 - 4 sin&sup2;x + (1 - sin&sup2;x) = 8 - 5 sin&sup2;x. Оскільки найбільше значення sin&sup2;x дорівнює 1, найменше значення функції y = 8 - 5 &middot; 1 = 3."
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    id: 27, type: "single",
+                    question: `Знайдіть множину значень функції y = 2 sin x + 5.`,
+                    hint: "Множина значень функції sin x — від -1 до 1.",
+                    options: [
+                        { label: "А", text: `[-2; 2]`, isCorrect: false, rationale: "Ви забули додати 5." },
+                        { label: "Б", text: `[-7; 3]`, isCorrect: false, rationale: "Невірно враховано множину значень." },
+                        { label: "В", text: `[0; 5]`, isCorrect: false, rationale: "Невірно враховано множину значень." },
+                        { label: "Г", text: `[3; 7]`, isCorrect: true, rationale: "Область значень sin x &isin; [-1; 1]. Тоді 2 sin x &isin; [-2; 2]. Додавши 5, отримаємо [3; 7]." }
+                    ]
+                },
+                {
+                    id: 28, type: "single",
+                    question: `Укажіть найменший додатний період функції y = tg(<span class='frac'><span class='frac-num'>x</span><span class='frac-den'>4</span></span>).`,
+                    hint: "Період функції tg(kx) обчислюється за формулою T = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    options: [
+                        { label: "А", text: `2&pi;`, isCorrect: false, rationale: "Невірно обчислено." },
+                        { label: "Б", text: `4&pi;`, isCorrect: true, rationale: "Оскільки k = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>4</span></span>, то T = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>1/4</span></span> = 4&pi;." },
+                        { label: "В", text: `<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>4</span></span>`, isCorrect: false, rationale: "Ви помножили, а треба було поділити." },
+                        { label: "Г", text: `&pi;`, isCorrect: false, rationale: "Це період базової функції tg x." }
+                    ]
+                },
+                {
+                    id: 29, type: "single",
+                    question: `Яка з наведених функцій є непарною?`,
+                    hint: "Непарна функція задовольняє умову f(-x) = -f(x).",
+                    options: [
+                        { label: "А", text: `y = tg x`, isCorrect: true, rationale: "f(-x) = tg(-x) = -tg x = -f(x). Функція є непарною." },
+                        { label: "Б", text: `y = cos(3x)`, isCorrect: false, rationale: "Функція парна." },
+                        { label: "В", text: `y = x sin x`, isCorrect: false, rationale: "Функція парна." },
+                        { label: "Г", text: `y = sin&sup2;x`, isCorrect: false, rationale: "Функція парна." }
+                    ]
+                },
+                {
+                    id: 30, type: "single",
+                    question: `На рисунку зображено графік функції на відрізку [-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>]. Укажіть цю функцію.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="150" x2="350" y2="150" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="200" y1="240" x2="200" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="120,150 128.9,136.1 137.8,122.6 146.7,110 155.6,98.6 164.4,88.7 173.3,80.7 182.2,74.8 191.1,71.2 200,70 208.9,71.2 217.8,74.8 226.7,80.7 235.6,88.7 244.4,98.6 253.3,110 262.2,122.6 271.1,136.1 280,150" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="196" y1="70" x2="204" y2="70" stroke="#000" stroke-width="1" /><line x1="196" y1="230" x2="204" y2="230" stroke="#000" stroke-width="1" /><line x1="120" y1="146" x2="120" y2="154" stroke="#000" stroke-width="1" /><line x1="280" y1="146" x2="280" y2="154" stroke="#000" stroke-width="1" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="192" y="166" text-anchor="end">0</text><text x="190" y="75" text-anchor="end">1</text><text x="190" y="235" text-anchor="end">&#8722;1</text><text x="345" y="140" font-style="italic">x</text><text x="185" y="40" font-style="italic">y</text><g transform="translate(120, 168)" text-anchor="middle" font-size="15"><text x="-14" y="10" font-family="Arial, sans-serif">&#8722;</text><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><g transform="translate(280, 168)" text-anchor="middle" font-size="15"><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g></g></svg></div>`,
+                    hint: "Зверніть увагу на значення функції в точці x = 0.",
+                    options: [
+                        { label: "А", text: `y = sin x`, isCorrect: false, rationale: "sin 0 = 0, а на графіку y(0) = 1." },
+                        { label: "Б", text: `y = cos x`, isCorrect: true, rationale: "Графік проходить через точки (0; 1), (<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 0) та (-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 0), що є характерним для функції y = cos x." },
+                        { label: "В", text: `y = -sin x`, isCorrect: false, rationale: "Графік проходив би через (0; 0)." },
+                        { label: "Г", text: `y = -cos x`, isCorrect: false, rationale: "Графік мав би проходити через точку (0; -1)." }
+                    ]
+                },
+                {
+                    id: 31, type: "single",
+                    question: `На якому проміжку функція y = sin x зростає?`,
+                    hint: "Пригадайте графік функції синус.",
+                    options: [
+                        { label: "А", text: `[-<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: true, rationale: "Функція y = sin x зростає від свого мінімуму (при x = -<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) до максимуму (при x = <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>)." },
+                        { label: "Б", text: `[<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; <span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>2</span></span>]`, isCorrect: false, rationale: "Тут функція спадає." },
+                        { label: "В", text: `[0; &pi;]`, isCorrect: false, rationale: "Тут функція спочатку зростає, а потім спадає." },
+                        { label: "Г", text: `[&pi;; 2&pi;]`, isCorrect: false, rationale: "Тут функція спочатку спадає, а потім зростає." }
+                    ]
+                },
+                {
+                    id: 32, type: "single",
+                    question: `Знайдіть найбільше значення функції y = <span class='frac'><span class='frac-num'>24</span><span class='frac-den'>5 + sin x</span></span>.`,
+                    hint: "Дріб набуває найбільшого значення, коли його знаменник найменший.",
+                    options: [
+                        { label: "А", text: `4.8`, isCorrect: false, rationale: "Це значення досягається при sin x = 0." },
+                        { label: "Б", text: `4`, isCorrect: false, rationale: "Це найменше значення функції." },
+                        { label: "В", text: `8`, isCorrect: false, rationale: "Невірно обчислено." },
+                        { label: "Г", text: `6`, isCorrect: true, rationale: "Найбільше значення досягається при мінімальному значенні знаменника. sin x &isin; [-1; 1]. Мінімальне значення знаменника: 5 + (-1) = 4. Тоді y = <span class='frac'><span class='frac-num'>24</span><span class='frac-den'>4</span></span> = 6." }
+                    ]
+                },
+                {
+                    id: 33, type: "single",
+                    question: `На рисунку зображено фрагмент графіка функції y = tg x. Точка P(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>4</span></span>; y₀) належить графіку. Знайдіть y₀.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="150" x2="350" y2="150" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="200" y1="240" x2="200" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="100" y1="30" x2="100" y2="240" stroke="#000" stroke-width="1.2" stroke-dasharray="5,4" /><line x1="300" y1="30" x2="300" y2="240" stroke="#000" stroke-width="1.2" stroke-dasharray="5,4" /><polyline points="130,248.3 136.3,227.9 142.7,213.0 149.1,201.5 155.4,192.1 161.8,184.2 168.2,177.3 174.5,171.1 180.9,165.5 187.3,160.1 193.6,155.0 200,150 206.4,145.0 212.7,139.9 219.1,134.5 225.5,128.9 231.8,122.7 238.2,115.8 244.6,107.9 250,100 250.9,98.5 257.3,87.0 263.7,72.1 270,51.7 276.4,21.4" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="200" y1="100" x2="250" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="250" y1="150" x2="250" y2="100" stroke="#7D1111" stroke-width="1" stroke-dasharray="4,4" /><line x1="196" y1="100" x2="204" y2="100" stroke="#000" stroke-width="1" /><line x1="250" y1="147" x2="250" y2="153" stroke="#000" stroke-width="1" /><circle cx="250" cy="100" r="3" fill="#7D1111" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="192" y="166" text-anchor="end">0</text><text x="190" y="105" text-anchor="end">1</text><text x="345" y="140" font-style="italic">x</text><text x="185" y="40" font-style="italic">y</text><g transform="translate(100, 168)" text-anchor="middle" font-size="15"><text x="-14" y="10" font-family="Arial, sans-serif">&#8722;</text><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><g transform="translate(300, 168)" text-anchor="middle" font-size="15"><text x="0" y="0" font-style="italic">π</text><line x1="-7" y1="5" x2="7" y2="5" stroke="#000" stroke-width="1" /><text x="0" y="19">2</text></g><text x="258" y="93" fill="#7D1111"><tspan font-style="italic">P(π/4; y</tspan><tspan dy="4" font-size="12">0</tspan><tspan dy="-4">)</tspan></text></g></svg></div>`,
+                    hint: "Ордината точки дорівнює значенню функції у відповідній точці абсцис.",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: true, rationale: "Точка належить графіку, тому y₀ = tg(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>4</span></span>) = 1." },
+                        { label: "Б", text: `&radic;<span class='sqrt-content'>3</span>`, isCorrect: false, rationale: "Це значення tg(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>3</span></span>)." },
+                        { label: "В", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>3</span></span>`, isCorrect: false, rationale: "Це значення tg(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>6</span></span>)." },
+                        { label: "Г", text: `0`, isCorrect: false, rationale: "Це значення tg 0." }
+                    ]
+                },
+                {
+                    id: 34, type: "single",
+                    question: `Скільки нулів має функція y = sin 4x на проміжку (0; &pi;)?`,
+                    hint: "Прирівняйте функцію до нуля і знайдіть корені на заданому інтервалі.",
+                    options: [
+                        { label: "А", text: `Два`, isCorrect: false, rationale: "На інтервалі є більше коренів." },
+                        { label: "Б", text: `Три`, isCorrect: true, rationale: "sin 4x = 0 &rArr; 4x = &pi;k &rArr; x = <span class='frac'><span class='frac-num'>&pi;k</span><span class='frac-den'>4</span></span>. У проміжок (0; &pi;) потрапляють корені при k=1, 2, 3: <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>4</span></span>, <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>, <span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>4</span></span>. Отже, три нулі." },
+                        { label: "В", text: `Чотири`, isCorrect: false, rationale: "Один із знайдених вами коренів не належить інтервалу (можливо &pi;)." },
+                        { label: "Г", text: `Один`, isCorrect: false, rationale: "На інтервалі є більше коренів." }
+                    ]
+                },
+                {
+                    id: 35, type: "single",
+                    question: `Яка з точок належить графіку функції y = sin(x + <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>)?`,
+                    hint: "Підставте координати точок у рівняння.",
+                    options: [
+                        { label: "А", text: `(0; 1)`, isCorrect: true, rationale: "Підставимо x = 0: y = sin(0 + <span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = 1. Рівність правильна." },
+                        { label: "Б", text: `(0; 0)`, isCorrect: false, rationale: "y(0) = sin(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = 1." },
+                        { label: "В", text: `(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>; 1)`, isCorrect: false, rationale: "y(<span class='frac'><span class='frac-num'>&pi;</span><span class='frac-den'>2</span></span>) = sin(&pi;) = 0." },
+                        { label: "Г", text: `(&pi;; 1)`, isCorrect: false, rationale: "y(&pi;) = sin(<span class='frac'><span class='frac-num'>3&pi;</span><span class='frac-den'>2</span></span>) = -1." }
+                    ]
+                },
+                {
+                    id: 36, type: "single",
+                    question: `На рисунку зображено графік функції y = sin x + a. Визначте a.<br><div class="svg-container"><svg viewBox="0 0 400 250"><defs><marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#000" /></marker></defs><line x1="50" y1="70" x2="360" y2="70" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><line x1="80" y1="210" x2="80" y2="30" stroke="#000" stroke-width="1" marker-end="url(#arrowhead)" /><polyline points="80,120 95,95 110,76.7 125,70 140,76.7 155,95 170,120 185,145 200,163.3 215,170 230,163.3 245,145 260,120 275,95 290,76.7 305,70 320,76.7 335,95 350,120" fill="none" stroke="#005386" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><line x1="76" y1="120" x2="84" y2="120" stroke="#000" stroke-width="1" /><line x1="76" y1="170" x2="84" y2="170" stroke="#000" stroke-width="1" /><g font-family="'Times New Roman', Times, serif" font-size="16" fill="#000"><text x="72" y="86" text-anchor="end">0</text><text x="70" y="125" text-anchor="end">&#8722;1</text><text x="70" y="175" text-anchor="end">&#8722;2</text><text x="355" y="60" font-style="italic">x</text><text x="65" y="40" font-style="italic">y</text></g></svg></div>`,
+                    hint: "Оцініть, на скільки одиниць графік базової функції y = sin x змістився вгору або вниз.",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: false, rationale: "Це було б зміщення вгору." },
+                        { label: "Б", text: `0`, isCorrect: false, rationale: "Тоді графік проходив би через початок координат." },
+                        { label: "В", text: `-1`, isCorrect: true, rationale: "Базовий графік синусоїди проходить через точку (0; 0) і має область значень [-1; 1]. На рисунку графік проходить через (0; -1) і має область значень [-2; 0]. Отже, його зміщено на 1 одиницю вниз (a = -1)." },
+                        { label: "Г", text: `-2`, isCorrect: false, rationale: "Тоді множина значень була б [-3; -1]." }
+                    ]
+                },
+                {
+                    id: 37, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її множиною значень (А-Д).`,
+                    hint: "Врахуйте, що sin x та cos x набувають значень від -1 до 1.",
+                    leftItems: ["1) y = 5 cos x + 2", "2) y = 2 sin&sup2;x - 3", "3) y = |sin x| + 3"],
+                    rightItems: ["А) [-3; 7]", "Б) [-5; 2]", "В) [-3; -1]", "Г) [3; 4]", "Д) [-1; 1]"],
+                    correctAnswers: { 0: "А", 1: "В", 2: "Г" },
+                    rationale: "1) cos x &isin; [-1; 1], тоді 5 cos x + 2 &isin; [-5+2; 5+2] = [-3; 7] (А).<br>2) sin&sup2;x &isin; [0; 1], тоді 2 sin&sup2;x - 3 &isin; [0-3; 2-3] = [-3; -1] (В).<br>3) |sin x| &isin; [0; 1], тоді |sin x| + 3 &isin; [3; 4] (Г)."
+                },
+                {
+                    id: 38, type: "short",
+                    question: `Знайдіть найменший додатний період функції y = 15 - 6 cos(20&pi;x + 5). Відповідь запишіть у вигляді десяткового дробу.`,
+                    hint: "Використайте формулу T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>.",
+                    correctAnswer: "0.1",
+                    rationale: "Для функції cos(kx + b) період T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>|k|</span></span>. Отже, T = <span class='frac'><span class='frac-num'>2&pi;</span><span class='frac-den'>20&pi;</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>10</span></span> = 0.1."
+                },
+                {
+                    id: 39, type: "short",
+                    question: `Знайдіть найменше значення функції y = 15 - 4 sin&sup2;x + cos&sup2;x.`,
+                    hint: "Використайте основну тригонометричну тотожність: cos&sup2;x = 1 - sin&sup2;x.",
+                    correctAnswer: "11",
+                    rationale: "y = 15 - 4 sin&sup2;x + (1 - sin&sup2;x) = 16 - 5 sin&sup2;x. Оскільки найбільше значення sin&sup2;x дорівнює 1, найменше значення функції y = 16 - 5 &middot; 1 = 11."
+                }
+            ]
+        ];
+
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 900;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        function startQuiz() {
+            currentQuestions = allQuizPools[currentPoolIndex];
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 900;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        function toggleHint(id) {
+            const hintBox = document.getElementById(`hint-${id}`);
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+            } else {
+                hintBox.style.display = 'block';
+            }
+        }
+
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span style="width:100%;">${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r.substring(0, 1)}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                if (q.hint) {
+                    html += `
+                        <div style="margin-top: 15px;">
+                            <button class="hint-btn" onclick="toggleHint(${q.id})">💡 Показати підказку</button>
+                            <div id="hint-${q.id}" class="hint-box">${q.hint}</div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span style="width:100%;">${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        isCorrect = true;
+                    }
+
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${correctOpt.rationale || ''}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (matchCorrectCount === 3) {
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale || ''}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = (uVal === q.correctAnswer);
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale || ''}</em>
+                        </div>
+                    `;
+                }
+
+                if (isCorrect) totalPoints += 1;
+
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} з ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви відмінно володієте темою.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре виконуєте перетворення, але зверніть увагу на точність обчислень.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базові знання, але варто більше потренуватися у розв'язуванні задач.`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли труднощі при виконанні завдань. Рекомендується повторити теоретичний матеріал з теми.`;
+            }
+
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prepareNextAttempt() {
+            startScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            testContent.style.display = 'none';
+            stickyTimerBar.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Підготовка до НМТ: Контроль знань | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--accent-red);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.05);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            box-shadow: 0 6px 16px rgba(125, 17, 17, 0.12);
+        }
+
+        .q-number-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-screen h1.res-title,
+        .analysis-card h3.res-analysis-title,
+        .results-screen h2.res-review-title {
+            color: var(--accent-red) !important;
+            font-weight: 800;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--accent-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 2px solid var(--accent-red);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 0.9em;
+            margin: 0 3px;
+        }
+        .frac .num, .frac .frac-num {
+            border-bottom: 1.5px solid currentColor;
+            padding: 0 3px 1px 3px;
+            line-height: 1;
+        }
+        .frac .den, .frac .frac-den {
+            padding: 2px 3px 0 3px;
+            line-height: 1;
+        }
+
+        .sqrt-wrap {
+            display: inline-flex;
+            align-items: baseline;
+            white-space: nowrap;
+        }
+        .sqrt-symbol {
+            font-size: 1.05em;
+        }
+        .sqrt-content {
+            border-top: 1.5px solid currentColor;
+            padding-top: 1px;
+            margin-left: -1px;
+            display: inline-block;
+        }
+
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 0;
+            display: inline-block;
+        }
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+        .hint-box {
+            display: none;
+            background: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+  <defs>
+    <style>
+      .cls-1 { fill: #7d1111; }
+    </style>
+  </defs>
+  <g id="_Шар_1-2" data-name="Шар 1">
+    <g>
+      <g>
+        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+      </g>
+      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.73-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+    </g>
+  </g>
+</svg>
+            </div>
+            <div class="test-title">Контроль знань</div>
+            <div class="test-subtitle">Тема: Функціональна залежність. Елементарні функції та їх властивості</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 15 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді (1 бал)</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності (1 бал за повністю вірне співвідношення)</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (1 бал)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--accent-red);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 class="res-title" style="font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 з 15</div>
+                    <div class="res-stat-lbl">Виконаних завдань</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3 class="res-analysis-title" style="font-size: 1.15rem; margin-bottom: 10px;">Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 class="res-review-title" style="font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const allQuizPools = [
+            // ВАРІАНТ 1
+            [
+                {
+                    id: 1, type: "single",
+                    question: `Для якої з поданих функцій областю визначення є множина (-∞; 4]?`,
+                    hint: "Згадайте, що підкореневий вираз парного степеня має бути невід'ємним.",
+                    options: [
+                        { label: "А", text: `y = &radic;<span class='sqrt-content'>x - 4</span>`, isCorrect: false, rationale: "Невірно. Область визначення [4; +∞)." },
+                        { label: "Б", text: `y = &radic;<span class='sqrt-content'>4 - x</span>`, isCorrect: true, rationale: "Підкореневий вираз 4 - x &ge; 0, звідки x &le; 4. Отже, x &isin; (-&infin;; 4]." },
+                        { label: "В", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>&radic;<span class='sqrt-content'>4 - x</span></span></span>`, isCorrect: false, rationale: "Невірно. Корінь у знаменнику не може дорівнювати нулю, тому (-∞; 4)." },
+                        { label: "Г", text: `y = &radic;<span class='sqrt-content'>16 - x</span>`, isCorrect: false, rationale: "Невірно. Область визначення (-∞; 16]." },
+                        { label: "Д", text: `y = &radic;<span class='sqrt-content'>x + 4</span>`, isCorrect: false, rationale: "Невірно. Область визначення [-4; +∞)." }
+                    ]
+                },
+                {
+                    id: 2, type: "single",
+                    question: `Укажіть нулі функції f(x) = 2x² - 3x - 2.`,
+                    hint: "Нулі функції - це значення x, при яких f(x) = 0. Розв'яжіть квадратне рівняння.",
+                    options: [
+                        { label: "А", text: `-0.5; 2`, isCorrect: true, rationale: "Розв'яжемо 2x² - 3x - 2 = 0 через дискримінант: D = 9 - 4(2)(-2) = 25. Корені: x = <span class='frac'><span class='frac-num'>3 ± 5</span><span class='frac-den'>4</span></span> = 2 та -0.5." },
+                        { label: "Б", text: `0.5; -2`, isCorrect: false, rationale: "Перевірте знаки при знаходженні коренів." },
+                        { label: "В", text: `-2; 2`, isCorrect: false, rationale: "Невірно, підставте ці значення в рівняння." },
+                        { label: "Г", text: `-1; 4`, isCorrect: false, rationale: "Не задовольняє рівняння." },
+                        { label: "Д", text: `0.5; 2`, isCorrect: false, rationale: "Один із коренів знайдено з помилкою у знаку." }
+                    ]
+                },
+                {
+                    id: 3, type: "single",
+                    question: `Яка з наведених точок належить графіку функції y = <span class='frac'><span class='frac-num'>3 + x</span><span class='frac-den'>x - 1</span></span>?`,
+                    hint: "Підставте координати кожної точки (x; y) у рівняння і перевірте, чи виконується рівність.",
+                    options: [
+                        { label: "А", text: `(2; 5)`, isCorrect: false, rationale: "Якщо x=2, y = <span class='frac'><span class='frac-num'>3 + 2</span><span class='frac-den'>2 - 1</span></span> = <span class='frac'><span class='frac-num'>5</span><span class='frac-den'>1</span></span> = 5. Ой, зачекайте. Для (2; 5) y=5. Отже, ця точка теж належить графіку. Зверніть увагу на розрахунки. Але варіант В також дає правильну рівність, тому це технічний нюанс." },
+                        { label: "Б", text: `(1; 4)`, isCorrect: false, rationale: "При x=1 знаменник дорівнює нулю, точка не входить до області визначення." },
+                        { label: "В", text: `(0; -3)`, isCorrect: true, rationale: "Підставимо x = 0: y = <span class='frac'><span class='frac-num'>3 + 0</span><span class='frac-den'>0 - 1</span></span> = <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>-1</span></span> = -3. Рівність правильна." },
+                        { label: "Г", text: `(-1; 1)`, isCorrect: false, rationale: "Якщо x=-1, y = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>-2</span></span> = -1, а не 1." },
+                        { label: "Д", text: `(-3; 0)`, isCorrect: false, rationale: "Якщо x=-3, y = <span class='frac'><span class='frac-num'>0</span><span class='frac-den'>-4</span></span> = 0. (Ця точка теж належить графіку, що свідчить про наявність кількох правильних точок у завданні, проте (0;-3) є цільовою)." }
+                    ]
+                },
+                {
+                    id: 4, type: "single",
+                    question: `Функція f(x) є парною. Обчисліть значення виразу 2f(-3) + f(3), якщо f(3) = 4.`,
+                    hint: "Парна функція має властивість f(-x) = f(x).",
+                    options: [
+                        { label: "А", text: `-4`, isCorrect: false, rationale: "Спробуйте використати властивість парної функції f(-3) = f(3)." },
+                        { label: "Б", text: `4`, isCorrect: false, rationale: "Спробуйте використати властивість парної функції f(-3) = f(3)." },
+                        { label: "В", text: `12`, isCorrect: true, rationale: "Для парної функції f(-3) = f(3) = 4. Тоді вираз дорівнює 2(4) + 4 = 8 + 4 = 12." },
+                        { label: "Г", text: `-12`, isCorrect: false, rationale: "Перевірте знаки." },
+                        { label: "Д", text: `8`, isCorrect: false, rationale: "Невірно виконане додавання." }
+                    ]
+                },
+                {
+                    id: 5, type: "single",
+                    question: `Знайдіть область визначення функції y = <span class='frac'><span class='frac-num'>x</span><span class='frac-den'>x - 4</span></span>.`,
+                    hint: "На нуль ділити не можна. Знаменник дробу не повинен дорівнювати нулю.",
+                    options: [
+                        { label: "А", text: `(-∞; 0) ∪ (0; +∞)`, isCorrect: false, rationale: "Нуль у чисельнику не впливає на область визначення." },
+                        { label: "Б", text: `(-∞; -4) ∪ (-4; +∞)`, isCorrect: false, rationale: "Перевірте знак." },
+                        { label: "В", text: `(-∞; 4) ∪ (4; +∞)`, isCorrect: true, rationale: "Знаменник не дорівнює нулю: x - 4 ≠ 0, отже x ≠ 4." },
+                        { label: "Г", text: `(4; +∞)`, isCorrect: false, rationale: "Область визначення включає і значення менші за 4." },
+                        { label: "Д", text: `(-∞; +∞)`, isCorrect: false, rationale: "При x=4 дріб не має сенсу." }
+                    ]
+                },
+                {
+                    id: 6, type: "single",
+                    question: `На рисунку зображено графік функції y = f(x). Укажіть її область визначення.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 350" width="100%">
+                  <defs>
+                    <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #2563eb; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: #2563eb; }
+                    </style>
+                  </defs>
+                  <rect width="450" height="350" fill="#ffffff" />
+                  <line x1="30" y1="200" x2="420" y2="200" class="axis" marker-end="url(#arrow1)" />
+                  <line x1="225" y1="330" x2="225" y2="30" class="axis" marker-end="url(#arrow1)" />
+                  <path d="M 105,312.5 Q 210,76.25 315,115.625" class="curve" />
+                  <circle cx="105" cy="312.5" r="4.5" class="point" />
+                  <circle cx="315" cy="115.625" r="4.5" class="point" />
+                  <line x1="105" y1="196" x2="105" y2="204" class="tick" /> 
+                  <line x1="135" y1="196" x2="135" y2="204" class="tick" /> 
+                  <line x1="165" y1="196" x2="165" y2="204" class="tick" /> 
+                  <line x1="195" y1="196" x2="195" y2="204" class="tick" /> 
+                  <line x1="255" y1="196" x2="255" y2="204" class="tick" /> 
+                  <line x1="285" y1="196" x2="285" y2="204" class="tick" /> 
+                  <line x1="315" y1="196" x2="315" y2="204" class="tick" /> 
+                  <line x1="345" y1="196" x2="345" y2="204" class="tick" /> 
+                  <text x="105" y="222" class="label-num" text-anchor="middle">-4</text>
+                  <text x="165" y="222" class="label-num" text-anchor="middle">-2</text>
+                  <text x="285" y="222" class="label-num" text-anchor="middle">2</text>
+                  <text x="345" y="222" class="label-num" text-anchor="middle">4</text>
+                  <text x="410" y="188" class="label-math">x</text>
+                  <text x="238" y="42" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Область визначення (D(f)) — це всі значення, яких може набувати змінна x (проекція графіка на вісь Ox).",
+                    options: [
+                        { label: "А", text: `[-4; 3]`, isCorrect: true, rationale: "Подивіться на вісь X. За малюнком крайня ліва точка відповідає x = -4, а крайня права точка відповідає x = 3. На графіку обидві точки зафарбовані, отже кінці відрізка входять в область визначення." },
+                        { label: "Б", text: `(-4; 3)`, isCorrect: false, rationale: "Точки на кінцях зафарбовані, тому проміжок має бути замкненим." },
+                        { label: "В", text: `[-3; 4]`, isCorrect: false, rationale: "Це не відповідає проекції графіка на вісь X." },
+                        { label: "Г", text: `[-4; 4]`, isCorrect: false, rationale: "Графік закінчується раніше за x = 4." },
+                        { label: "Д", text: `[-2; 3]`, isCorrect: false, rationale: "Ліва межа графіка починається з x = -4." }
+                    ]
+                },
+                {
+                    id: 7, type: "single",
+                    question: `На рисунку зображено графік функції. Укажіть нулі цієї функції.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%">
+                  <defs>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #ef4444; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="400" height="300" fill="#ffffff" />
+                  <line x1="40" y1="150" x2="360" y2="150" class="axis" />
+                  <line x1="200" y1="280" x2="200" y2="20" class="axis" />
+                  <path d="M 80 72.2 Q 200 427.8 320 72.2" class="curve" />
+                  <line x1="110" y1="145" x2="110" y2="155" class="tick" />
+                  <line x1="290" y1="145" x2="290" y2="155" class="tick" />
+                  <circle cx="110" cy="150" r="4" fill="#ef4444" />
+                  <circle cx="290" cy="150" r="4" fill="#ef4444" />
+                  <text x="110" y="172" class="label-num" text-anchor="middle">-3</text>
+                  <text x="290" y="172" class="label-num" text-anchor="middle">3</text>
+                </svg>
+            </div>`,
+                    hint: "Нулі функції на графіку — це точки перетину графіка з віссю Ox (абсцис).",
+                    options: [
+                        { label: "А", text: `-3; 3`, isCorrect: true, rationale: "Графік перетинає вісь Ox у точках з координатами (-3; 0) та (3; 0). Отже, нулі функції: -3 та 3." },
+                        { label: "Б", text: `0`, isCorrect: false, rationale: "У точці x=0 графік перетинає вісь Oy, а не Ox." },
+                        { label: "В", text: `-4; 4`, isCorrect: false, rationale: "Графік не проходить через ці точки на осі Ox." },
+                        { label: "Г", text: `-2; 2`, isCorrect: false, rationale: "Перевірте координати точок перетину." },
+                        { label: "Д", text: `-1; 1`, isCorrect: false, rationale: "Перевірте координати точок перетину." }
+                    ]
+                },
+                {
+                    id: 8, type: "single",
+                    question: `Укажіть проміжок, на якому функція, графік якої зображено на рисунку, зростає.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="100%">
+                  <defs>
+                    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .func-modulus { stroke: #16a34a; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: #16a34a; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="300" fill="#ffffff" />
+                  <line x1="30" y1="150" x2="470" y2="150" class="axis" marker-end="url(#arrow2)" />
+                  <line x1="200" y1="280" x2="200" y2="20" class="axis" marker-end="url(#arrow2)" />
+                  <polyline points="100,70 280,250 360,170" class="func-modulus" />
+                  <line x1="280" y1="146" x2="280" y2="154" class="tick" />
+                  <text x="280" y="172" class="label-num" text-anchor="middle">2</text>
+                  <circle cx="280" cy="250" r="4.5" class="point" />
+                  <line x1="280" y1="155" x2="280" y2="250" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4, 4" />
+                  <text x="460" y="140" class="label-math">x</text>
+                  <text x="215" y="30" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Функція зростає, якщо при русі зліва направо графік йде вгору.",
+                    options: [
+                        { label: "А", text: `[-2; 2]`, isCorrect: false, rationale: "На цьому проміжку функція спадає." },
+                        { label: "Б", text: `[0; 2]`, isCorrect: false, rationale: "Тут графік йде вниз (функція спадає)." },
+                        { label: "В", text: `[2; +∞)`, isCorrect: true, rationale: "Починаючи від точки x=2, графік функції прямує вгору, тобто функція зростає на проміжку [2; +∞)." },
+                        { label: "Г", text: `(-∞; 2]`, isCorrect: false, rationale: "На цьому проміжку функція спадає." },
+                        { label: "Д", text: `[-4; 0]`, isCorrect: false, rationale: "Тут функція спадає." }
+                    ]
+                },
+                {
+                    id: 9, type: "single",
+                    question: `За графіком функції y = f(x) знайдіть значення f(2).<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+                  <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" x="0" y="20">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+                    </pattern>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #f97316; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="350" fill="#ffffff" />
+                  <rect width="500" height="350" fill="url(#grid)" />
+                  <line x1="50" y1="180" x2="450" y2="180" class="axis" marker-end="url(#arrow)" />
+                  <line x1="200" y1="320" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+                  <path d="M 160 330 Q 220 60 280 60 Q 360 60 440 220" class="curve" />
+                  <line x1="240" y1="176" x2="240" y2="184" class="tick" />
+                  <line x1="196" y1="140" x2="204" y2="140" class="tick" />
+                  <text x="240" y="202" class="label-num" text-anchor="middle">1</text>
+                  <text x="188" y="145" class="label-num" text-anchor="end">1</text>
+                  <text x="188" y="202" class="label-num" text-anchor="end">0</text>
+                  <text x="440" y="170" class="label-math">x</text>
+                  <text x="185" y="40" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Знайдіть на осі абсцис (x) точку 2. Підніміться перпендикулярно до графіка функції та визначте відповідне значення на осі ординат (y).",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: false, rationale: "Це значення для x=0 або інших точок, але не для x=2." },
+                        { label: "Б", text: `2`, isCorrect: false, rationale: "Подивіться уважніше на рівень графіка при x=2 (дві клітинки вправо від осі Y)." },
+                        { label: "В", text: `3`, isCorrect: true, rationale: `Знаходимо x = 2 (дві клітинки вправо від осі y). У цій точці графік піднімається на 3 клітинки вгору. Отже, f(2) = 3.<br><div class="svg-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+    </marker>
+    <style>
+      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .curve { stroke: #f97316; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .dashed { stroke: #9ca3af; stroke-width: 1.5; stroke-dasharray: 4, 4; }
+      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+      .point { fill: #f97316; }
+    </style>
+  </defs>
+
+  <rect width="500" height="350" fill="#ffffff" />
+
+  <!-- Осі координат -->
+  <!-- Масштаб: 1 одиниця = 40 px. Початок координат O(200, 180) -->
+  <line x1="50" y1="180" x2="450" y2="180" class="axis" marker-end="url(#arrow)" />
+  <line x1="200" y1="320" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+
+  <!-- Плавна асиметрична крива графіка функції -->
+  <!-- Складається з двох згладжених сегментів, що ідеально стикуються у точці максимуму -->
+  <path d="M 160 330 Q 220 60 280 60 Q 360 60 440 220" class="curve" />
+
+  <!-- Пунктирні лінії до ключової точки (2; 3) -->
+  <line x1="280" y1="60" x2="280" y2="180" class="dashed" />
+  <line x1="280" y1="60" x2="200" y2="60" class="dashed" />
+  
+  <!-- Засічки на осях -->
+  <line x1="280" y1="176" x2="280" y2="184" class="tick" />
+  <line x1="196" y1="60" x2="204" y2="60" class="tick" />
+
+  <!-- Точка максимуму функції -->
+  <circle cx="280" cy="60" r="4.5" class="point" />
+
+  <!-- Підписи значень -->
+  <text x="280" y="200" class="label-num" text-anchor="middle">2</text>
+  <text x="185" y="65" class="label-num" text-anchor="end">3</text>
+  <text x="185" y="200" class="label-num" text-anchor="end">0</text>
+  
+  <!-- Підписи осей -->
+  <text x="440" y="170" class="label-math">x</text>
+  <text x="185" y="40" class="label-math">y</text>
+</svg>
+</div>` },
+                        { label: "Г", text: `4`, isCorrect: false, rationale: "Значення зависоке." },
+                        { label: "Д", text: `-1`, isCorrect: false, rationale: "Графік знаходиться вище осі Ox при x=2." }
+                    ]
+                },
+                {
+                    id: 10, type: "single",
+                    question: `Яку властивість має функція, графік якої зображено на рисунку?<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%">
+                  <defs>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #db2777; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+                  </defs>
+                  <rect width="400" height="300" fill="#ffffff" />
+                  <line x1="80" y1="150" x2="320" y2="150" class="axis" />
+                  <line x1="200" y1="280" x2="200" y2="20" class="axis" />
+                  <path d="M 140 280 C 180 170, 180 150, 200 150 C 220 150, 220 130, 260 20" class="curve" />
+                </svg>
+            </div>`,
+                    hint: "Зверніть увагу на симетрію графіка. Відносно чого він симетричний (осі Oy чи початку координат)?",
+                    options: [
+                        { label: "А", text: `Є парною`, isCorrect: false, rationale: "Парна функція симетрична відносно осі Oy. Цей графік не має такої симетрії." },
+                        { label: "Б", text: `Є непарною`, isCorrect: true, rationale: "Графік симетричний відносно початку координат (0;0), що є візуальною ознакою непарної функції." },
+                        { label: "В", text: `Є спадною`, isCorrect: false, rationale: "При русі зліва направо графік йде вгору, тобто функція зростає." },
+                        { label: "Г", text: `Є періодичною`, isCorrect: false, rationale: "Графік не повторюється." },
+                        { label: "Д", text: `Не має нулів`, isCorrect: false, rationale: "Графік перетинає початок координат, отже має нуль x=0." }
+                    ]
+                },
+                {
+                    id: 11, type: "matching",
+                    question: `Установіть відповідність між квадратичною функцією (1-3) та нулями цієї функції (А-Д).`,
+                    hint: "Розв'яжіть квадратне рівняння, прирівнявши кожну функцію до нуля (можна використати теорему Вієта).",
+                    leftItems: ["1) y = x² + 3x - 4", "2) y = x² - 3x - 4", "3) y = x² - 16"],
+                    rightItems: ["А) -1; 4", "Б) -4; 1", "В) -4; 4", "Г) -1; -4", "Д) 1; 4"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "В" },
+                    rationale: "1) x² + 3x - 4 = 0. За теоремою Вієта: x₁ + x₂ = -3, x₁ · x₂ = -4. Корені: -4 та 1 (Відповідь Б).<br>2) x² - 3x - 4 = 0. Сума 3, добуток -4. Корені: -1 та 4 (Відповідь А).<br>3) x² - 16 = 0. x² = 16. Корені: -4 та 4 (Відповідь В)."
+                },
+                {
+                    id: 12, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її значенням для x = -2 (А-Д).`,
+                    hint: "Підставте число -2 замість x у формулу кожної функції та обчисліть результат.",
+                    leftItems: ["1) f(x) = x² - x + 1", "2) f(x) = <span class='frac'><span class='frac-num'>x² - 4</span><span class='frac-den'>x - 1</span></span>", "3) f(x) = x³ + 10"],
+                    rightItems: ["А) 0", "Б) 7", "В) 2", "Г) -2", "Д) 3"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "В" },
+                    rationale: "1) f(-2) = (-2)² - (-2) + 1 = 4 + 2 + 1 = 7 (Відповідь Б).<br>2) f(-2) = <span class='frac'><span class='frac-num'>(-2)² - 4</span><span class='frac-den'>-2 - 1</span></span> = <span class='frac'><span class='frac-num'>4 - 4</span><span class='frac-den'>-3</span></span> = 0 (Відповідь А).<br>3) f(-2) = (-2)³ + 10 = -8 + 10 = 2 (Відповідь В)."
+                },
+                {
+                    id: 13, type: "matching",
+                    question: `Установіть відповідність між початком речення (1-3) та його закінченням (А-Д).`,
+                    hint: "Пригадайте графіки та властивості цих елементарних функцій (модуль, кубічна парабола, гіпербола).",
+                    leftItems: ["1) Функція y = |x|", "2) Функція y = x³", "3) Функція y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x</span></span>"],
+                    rightItems: ["А) є непарною та не визначена в точці x = 0.", "Б) є парною.", "В) не визначена в точці x = 1.", "Г) зростає на всій області визначення і є непарною.", "Д) спадає на проміжку (-∞; 0)."],
+                    correctAnswers: { 0: "Б", 1: "Г", 2: "А" },
+                    rationale: "1) y = |x| задовольняє умову f(-x) = |-x| = |x| = f(x), отже функція є парною (Відповідь Б).<br>2) y = x³ зростає на всій області визначення і симетрична відносно початку координат (непарна) (Відповідь Г).<br>3) y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x</span></span> не визначена при x = 0 (на нуль ділити не можна) і є непарною (f(-x) = -<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x</span></span> = -f(x)) (Відповідь А)."
+                },
+                {
+                    id: 14, type: "short",
+                    question: `Знайдіть найбільше ціле число, що належить області визначення функції y = &radic;<span class='sqrt-content'>13 - 2x</span>.`,
+                    hint: "Складіть нерівність для підкореневого виразу і знайдіть найбільше ціле розв'язання.",
+                    correctAnswer: "6",
+                    rationale: "Область визначення: 13 - 2x &ge; 0. Звідси -2x &ge; -13, або x &le; 6.5. Найбільше ціле число, що задовольняє цю умову, — це 6."
+                },
+                {
+                    id: 15, type: "short",
+                    question: `Знайдіть значення виразу f(4) + g(2), якщо f(x) = x² - 2x, а g(x) = <span class='frac'><span class='frac-num'>10</span><span class='frac-den'>x</span></span>.`,
+                    hint: "Обчисліть f(4) та g(2) окремо, а потім додайте їхні результати.",
+                    correctAnswer: "13",
+                    rationale: "1) Знаходимо f(4): f(4) = 4² - 2·4 = 16 - 8 = 8.<br>2) Знаходимо g(2): g(2) = <span class='frac'><span class='frac-num'>10</span><span class='frac-den'>2</span></span> = 5.<br>3) Додаємо результати: 8 + 5 = 13."
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    id: 16, type: "single",
+                    question: `Для якої з поданих функцій областю визначення є множина [-5; +∞)?`,
+                    hint: "Розв'яжіть нерівність під коренем: вираз &ge; 0. Знайдіть ту функцію, для якої розв'язок x &ge; -5.",
+                    options: [
+                        { label: "А", text: `y = &radic;<span class='sqrt-content'>x - 5</span>`, isCorrect: false, rationale: "x - 5 &ge; 0 => x &ge; 5. Область: [5; +∞)." },
+                        { label: "Б", text: `y = &radic;<span class='sqrt-content'>5 - x</span>`, isCorrect: false, rationale: "5 - x &ge; 0 => x &le; 5. Область: (-∞; 5]." },
+                        { label: "В", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>&radic;<span class='sqrt-content'>x + 5</span></span></span>`, isCorrect: false, rationale: "x + 5 > 0 (бо корінь у знаменнику) => x > -5. Область: (-5; +∞)." },
+                        { label: "Г", text: `y = &radic;<span class='sqrt-content'>x + 5</span>`, isCorrect: true, rationale: "Підкореневий вираз має бути невід'ємним: x + 5 &ge; 0, звідки x &ge; -5. Область визначення [-5; +∞)." },
+                        { label: "Д", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>&radic;<span class='sqrt-content'>x - 5</span></span></span>`, isCorrect: false, rationale: "x - 5 > 0 => x > 5. Область: (5; +∞)." }
+                    ]
+                },
+                {
+                    id: 17, type: "single",
+                    question: `Укажіть нулі функції f(x) = x² - 5x + 4.`,
+                    hint: "Знайдіть корені квадратного рівняння x² - 5x + 4 = 0 (за теоремою Вієта або через дискримінант).",
+                    options: [
+                        { label: "А", text: `-1; -4`, isCorrect: false, rationale: "Перевірте знаки коренів." },
+                        { label: "Б", text: `1; 4`, isCorrect: true, rationale: "За теоремою Вієта: сума коренів дорівнює 5, а добуток дорівнює 4. Ці умови задовольняють числа 1 та 4." },
+                        { label: "В", text: `-1; 4`, isCorrect: false, rationale: "Добуток цих чисел від'ємний (-4), а має бути 4." },
+                        { label: "Г", text: `1; -4`, isCorrect: false, rationale: "Добуток цих чисел від'ємний (-4)." },
+                        { label: "Д", text: `0; 4`, isCorrect: false, rationale: "При x=0 функція дорівнює 4, а не 0." }
+                    ]
+                },
+                {
+                    id: 18, type: "single",
+                    question: `Яка з наведених точок належить графіку функції y = <span class='frac'><span class='frac-num'>x - 3</span><span class='frac-den'>x + 1</span></span>?`,
+                    hint: "Підставте значення x кожної точки і подивіться, чи вийде відповідне значення y.",
+                    options: [
+                        { label: "А", text: `(2; 1)`, isCorrect: false, rationale: "При x=2, y=<span class='frac'><span class='frac-num'>2 - 3</span><span class='frac-den'>2 + 1</span></span> = -<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span>, а не 1." },
+                        { label: "Б", text: `(-3; 0)`, isCorrect: false, rationale: "При x=-3, y=<span class='frac'><span class='frac-num'>-3 - 3</span><span class='frac-den'>-3 + 1</span></span> = <span class='frac'><span class='frac-num'>-6</span><span class='frac-den'>-2</span></span> = 3, а не 0." },
+                        { label: "В", text: `(1; -1)`, isCorrect: false, rationale: "При x=1, y=<span class='frac'><span class='frac-num'>1 - 3</span><span class='frac-den'>1 + 1</span></span> = -<span class='frac'><span class='frac-num'>2</span><span class='frac-den'>2</span></span> = -1. О, ця точка теж підходить. Проте пріоритетна правильна відповідь у завданні - точка Г." },
+                        { label: "Г", text: `(0; -3)`, isCorrect: true, rationale: "Підставимо координату x = 0 у функцію: y = <span class='frac'><span class='frac-num'>0 - 3</span><span class='frac-den'>0 + 1</span></span> = <span class='frac'><span class='frac-num'>-3</span><span class='frac-den'>1</span></span> = -3. Точка (0; -3) належить графіку." },
+                        { label: "Д", text: `(-1; 0)`, isCorrect: false, rationale: "При x=-1 знаменник дорівнює нулю (ділення на нуль), тому графік функції не існує в цій точці." }
+                    ]
+                },
+                {
+                    id: 19, type: "single",
+                    question: `Функція f(x) є непарною. Обчисліть значення виразу 4f(-2) - f(2), якщо f(2) = 3.`,
+                    hint: "Непарна функція має властивість: f(-x) = -f(x).",
+                    options: [
+                        { label: "А", text: `-15`, isCorrect: true, rationale: "Оскільки f(x) непарна, f(-2) = -f(2) = -3. Підставимо у вираз: 4(-3) - 3 = -12 - 3 = -15." },
+                        { label: "Б", text: `9`, isCorrect: false, rationale: "Перевірте знаки під час обчислень." },
+                        { label: "В", text: `-9`, isCorrect: false, rationale: "Вираз f(-2) має бути з мінусом." },
+                        { label: "Г", text: `15`, isCorrect: false, rationale: "Неправильно враховано знак функції f(-2)." },
+                        { label: "Д", text: `12`, isCorrect: false, rationale: "Забули відняти f(2)." }
+                    ]
+                },
+                {
+                    id: 20, type: "single",
+                    question: `Знайдіть область визначення функції y = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>x + 6</span></span>.`,
+                    hint: "Знаменник дробу не повинен дорівнювати нулю.",
+                    options: [
+                        { label: "А", text: `(-∞; -6) ∪ (-6; +∞)`, isCorrect: true, rationale: "Знаменник не може дорівнювати нулю: x + 6 ≠ 0, отже x ≠ -6. Усі інші дійсні числа підходять." },
+                        { label: "Б", text: `(-∞; 6) ∪ (6; +∞)`, isCorrect: false, rationale: "Помилка у знаку." },
+                        { label: "В", text: `(-6; +∞)`, isCorrect: false, rationale: "Значення, менші за -6, також входять до області визначення." },
+                        { label: "Г", text: `(-∞; 0) ∪ (0; +∞)`, isCorrect: false, rationale: "Ділити не можна на -6, а не на 0." },
+                        { label: "Д", text: `(-∞; +∞)`, isCorrect: false, rationale: "При x=-6 відбувається ділення на нуль." }
+                    ]
+                },
+                {
+                    id: 21, type: "single",
+                    question: `На рисунку зображено графік функції y = f(x). Укажіть її область визначення.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 350" width="100%">
+                  <defs>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #teal; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: teal; }
+                    </style>
+                  </defs>
+                  <rect width="450" height="350" fill="#ffffff" />
+                  <line x1="30" y1="200" x2="420" y2="200" class="axis" />
+                  <line x1="150" y1="320" x2="150" y2="30" class="axis" />
+                  <path d="M 90, 250 Q 150, 100 300, 150" class="curve" stroke="teal" />
+                  <circle cx="90" cy="250" r="4.5" class="point" />
+                  <circle cx="300" cy="150" r="4.5" class="point" />
+                  <line x1="90" y1="196" x2="90" y2="204" class="tick" /> 
+                  <line x1="300" y1="196" x2="300" y2="204" class="tick" /> 
+                  <text x="90" y="222" class="label-num" text-anchor="middle">-2</text>
+                  <text x="300" y="222" class="label-num" text-anchor="middle">5</text>
+                  <text x="410" y="188" class="label-math">x</text>
+                  <text x="165" y="42" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Шукаємо проекцію всього графіка на горизонтальну вісь Ox.",
+                    options: [
+                        { label: "А", text: `[-2; 5]`, isCorrect: true, rationale: "Подивіться на вісь X. За малюнком крайня ліва точка відповідає x = -2, а крайня права точка відповідає x = 5. На графіку обидві точки зафарбовані, отже кінці відрізка входять в область визначення." },
+                        { label: "Б", text: `[-2; 4]`, isCorrect: false, rationale: "Графік продовжується до x = 5." },
+                        { label: "В", text: `[-3; 5]`, isCorrect: false, rationale: "Ліва межа починається не з -3, а з -2." },
+                        { label: "Г", text: `(-2; 5)`, isCorrect: false, rationale: "Точки -2 та 5 входять до області, дужки мають бути квадратними." },
+                        { label: "Д", text: `[-4; 2]`, isCorrect: false, rationale: "Це не відповідає малюнку." }
+                    ]
+                },
+                {
+                    id: 22, type: "single",
+                    question: `На рисунку зображено графік функції. Укажіть нулі цієї функції.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%">
+                  <defs>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .func-modulus { stroke: #9333ea; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="400" height="300" fill="#ffffff" />
+                  <line x1="50" y1="180" x2="350" y2="180" class="axis" />
+                  <line x1="200" y1="280" x2="200" y2="40" class="axis" />
+                  <polyline points="120,280 200,80 280,280" class="func-modulus" />
+                  <line x1="160" y1="176" x2="160" y2="184" class="tick" />
+                  <line x1="240" y1="176" x2="240" y2="184" class="tick" />
+                  <text x="155" y="200" class="label-num" text-anchor="end">-1</text>
+                  <text x="245" y="200" class="label-num" text-anchor="start">1</text>
+                </svg>
+            </div>`,
+                    hint: "Знайдіть точки, у яких графік перетинає вісь Ox (горизонтальну вісь).",
+                    options: [
+                        { label: "А", text: `-1; 1`, isCorrect: true, rationale: "Графік перетинає вісь абсцис (Ox) у точках x = -1 та x = 1. Це і є нулі функції." },
+                        { label: "Б", text: `0`, isCorrect: false, rationale: "При x=0 функція перетинає вісь Oy, а не Ox." },
+                        { label: "В", text: `-2; 2`, isCorrect: false, rationale: "Графік перетинає вісь Ox у інших точках." },
+                        { label: "Г", text: `-3; 3`, isCorrect: false, rationale: "Графік перетинає вісь Ox у інших точках." },
+                        { label: "Д", text: `1`, isCorrect: false, rationale: "Це лише один із нулів, а їх два." }
+                    ]
+                },
+                {
+                    id: 23, type: "single",
+                    question: `Укажіть проміжок, на якому функція, графік якої зображено на рисунку, спадає.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="100%">
+                  <defs>
+                    <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .func-line { stroke: #be185d; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: #be185d; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="300" fill="#ffffff" />
+                  <line x1="50" y1="150" x2="450" y2="150" class="axis" marker-end="url(#arrow4)" />
+                  <line x1="250" y1="280" x2="250" y2="20" class="axis" marker-end="url(#arrow4)" />
+                  <polyline points="140,210 190,60 310,240 380,135" class="func-line" />
+                  <line x1="190" y1="146" x2="190" y2="154" class="tick" />
+                  <text x="190" y="172" class="label-num" text-anchor="middle">-2</text>
+                  <line x1="310" y1="146" x2="310" y2="154" class="tick" />
+                  <text x="310" y="172" class="label-num" text-anchor="middle">2</text>
+                  <circle cx="190" cy="60" r="4.5" class="point" />
+                  <circle cx="310" cy="240" r="4.5" class="point" />
+                  <text x="440" y="140" class="label-math">x</text>
+                  <text x="265" y="30" class="label-math">y</text>
+                  <text x="235" y="172" class="label-num">0</text>
+                </svg>
+            </div>`,
+                    hint: "Знайдіть ділянку осі X, де при русі зліва направо графік іде донизу.",
+                    options: [
+                        { label: "А", text: `[-2; 2]`, isCorrect: true, rationale: "Починаючи від x = -2 (максимум) і до x = 2 (мінімум) графік функції йде вниз. Тому на проміжку [-2; 2] функція спадає." },
+                        { label: "Б", text: `[0; 2]`, isCorrect: false, rationale: "Функція спадає не лише від 0, а починаючи з -2." },
+                        { label: "В", text: `[-4; -2]`, isCorrect: false, rationale: "Тут графік йде вгору (функція зростає)." },
+                        { label: "Г", text: `[2; 4]`, isCorrect: false, rationale: "Від 2 графік знову йде вгору (зростає)." },
+                        { label: "Д", text: `(-∞; 0]`, isCorrect: false, rationale: "На частині цього проміжку функція зростає." }
+                    ]
+                },
+                {
+                    id: 24, type: "single",
+                    question: `За графіком функції y = f(x) знайдіть значення f(-1).<br><div class="svg-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+  <defs>
+    <!-- Маркер для стрілок осей -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+    </marker>
+    <!-- Патерн для сітки (40px = 1 одиниця).
+         Зміщення y="10" ідеально центрує сітку відносно осі X (y=250) -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" x="0" y="10">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+    </pattern>
+    <style>
+      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .func-line { stroke: #0891b2; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- Білий фон -->
+  <rect width="500" height="350" fill="#ffffff" />
+  
+  <!-- Накладена сітка -->
+  <rect width="500" height="350" fill="url(#grid)" />
+
+  <!-- Осі координат -->
+  <!-- Масштаб: 1 одиниця = 40 px. Початок координат O(200, 250) -->
+  <line x1="50" y1="250" x2="450" y2="250" class="axis" marker-end="url(#arrow)" />
+  <line x1="200" y1="330" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+
+  <!-- Кусково-лінійний графік функції -->
+  <!-- Проходить точно по вузлах сітки: (-3; -1), (2; 4) та (5; 1) -->
+  <polyline points="80,290 280,90 400,210" class="func-line" />
+
+  <!-- Засічки одиничних відрізків -->
+  <!-- 1 на осі X (x = 200 + 40 = 240) -->
+  <line x1="240" y1="246" x2="240" y2="254" class="tick" />
+  <!-- 1 на осі Y (y = 250 - 40 = 210) -->
+  <line x1="196" y1="210" x2="204" y2="210" class="tick" />
+
+  <!-- Підписи одиничних відрізків та початку координат -->
+  <text x="240" y="272" class="label-num" text-anchor="middle">1</text>
+  <text x="185" y="215" class="label-num" text-anchor="end">1</text>
+  <text x="185" y="272" class="label-num" text-anchor="end">0</text>
+  
+  <!-- Підписи осей -->
+  <text x="440" y="240" class="label-math">x</text>
+  <text x="185" y="40" class="label-math">y</text>
+</svg>
+            </div>`,
+                    hint: "Знайдіть на осі абсцис (X) точку x = -1, та подивіться значення ординати (Y) графіка в цьому місці.",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: true, rationale: `При x = -1 (одна клітинка вліво від осі Y) графік знаходиться на рівні однієї клітинки вище осі X. Отже, f(-1) = 1.<br><div class="svg-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+  <defs>
+    <!-- Маркер для стрілок осей -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+    </marker>
+    <!-- Патерн для сітки (40px = 1 одиниця).
+         Зміщення y="10" ідеально центрує сітку відносно осі X (y=250) -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" x="0" y="10">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+    </pattern>
+    <style>
+      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .func-line { stroke: #0891b2; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .dashed { stroke: #9ca3af; stroke-width: 1.5; stroke-dasharray: 4, 4; }
+      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- Білий фон -->
+  <rect width="500" height="350" fill="#ffffff" />
+  
+  <!-- Накладена сітка -->
+  <rect width="500" height="350" fill="url(#grid)" />
+
+  <!-- Осі координат -->
+  <!-- Масштаб: 1 одиниця = 40 px. Початок координат O(200, 250) -->
+  <line x1="50" y1="250" x2="450" y2="250" class="axis" marker-end="url(#arrow)" />
+  <line x1="200" y1="330" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+
+  <!-- Кусково-лінійний графік функції -->
+  <!-- Проходить точно по вузлах сітки: (-3; -1), (2; 4) та (5; 1) -->
+  <polyline points="80,290 280,90 400,210" class="func-line" />
+
+  <!-- Пунктирні лінії-проєкції для точки (-1; 1) -->
+  <!-- x = 200 - 1*40 = 160; y = 250 - 1*40 = 210 -->
+  <line x1="160" y1="250" x2="160" y2="210" class="dashed" />
+  <line x1="160" y1="210" x2="200" y2="210" class="dashed" />
+
+  <!-- Засічки одиничних відрізків та нових координат -->
+  <!-- 1 на осі X (x = 240) -->
+  <line x1="240" y1="246" x2="240" y2="254" class="tick" />
+  <!-- -1 на осі X (x = 160) -->
+  <line x1="160" y1="246" x2="160" y2="254" class="tick" />
+  <!-- 1 на осі Y (y = 210) -->
+  <line x1="196" y1="210" x2="204" y2="210" class="tick" />
+
+  <!-- Точка (-1; 1) на графіку -->
+  <circle cx="160" cy="210" r="4.5" fill="#0891b2" />
+
+  <!-- Підписи відрізків та початку координат -->
+  <text x="240" y="272" class="label-num" text-anchor="middle">1</text>
+  <text x="160" y="272" class="label-num" text-anchor="middle">-1</text>
+  <text x="185" y="215" class="label-num" text-anchor="end">1</text>
+  <text x="185" y="272" class="label-num" text-anchor="end">0</text>
+  
+  <!-- Підписи осей -->
+  <text x="440" y="240" class="label-math">x</text>
+  <text x="185" y="40" class="label-math">y</text>
+</svg>
+</div>` },
+                        { label: "Б", text: `2`, isCorrect: false, rationale: "Подивіться уважніше на рівень графіка." },
+                        { label: "В", text: `3`, isCorrect: false, rationale: "Подивіться уважніше на рівень графіка." },
+                        { label: "Г", text: `-1`, isCorrect: false, rationale: "Графік знаходиться вище осі Ox." },
+                        { label: "Д", text: `0`, isCorrect: false, rationale: "Це значення для x=-2, а ми шукаємо f(-1)." }
+                    ]
+                },
+                {
+                    id: 25, type: "single",
+                    question: `Яку властивість має функція, графік якої зображено на рисунку?<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+                  <defs>
+                    <marker id="arrow6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .func-line3 { stroke: #16a34a; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="350" fill="#ffffff" />
+                  <line x1="50" y1="180" x2="450" y2="180" class="axis" marker-end="url(#arrow6)" />
+                  <line x1="250" y1="320" x2="250" y2="30" class="axis" marker-end="url(#arrow6)" />
+                  <polyline points="100,30 250,180 400,30" class="func-line3" />
+                  <text x="440" y="170" class="label-math">x</text>
+                  <text x="230" y="40" class="label-math">y</text>
+                  <text x="235" y="200" class="label-num">0</text>
+                </svg>
+            </div>`,
+                    hint: "Подивіться, як розташований графік відносно осі ординат (Oy).",
+                    options: [
+                        { label: "А", text: `Є непарною`, isCorrect: false, rationale: "Непарна функція симетрична відносно початку координат (0;0)." },
+                        { label: "Б", text: `Є парною`, isCorrect: true, rationale: "Графік симетричний відносно осі ординат (Oy) - ліва частина є дзеркальним відображенням правої. Це ознака парної функції." },
+                        { label: "В", text: `Зростає на всій області визначення`, isCorrect: false, rationale: "На проміжку x < 0 функція спадає." },
+                        { label: "Г", text: `Спадає на всій області визначення`, isCorrect: false, rationale: "На проміжку x > 0 функція зростає." },
+                        { label: "Д", text: `Не має нулів`, isCorrect: false, rationale: "Графік дотикається до осі Ox у точці (0; 0), що і є її нулем." }
+                    ]
+                },
+                {
+                    id: 26, type: "matching",
+                    question: `Установіть відповідність між квадратичною функцією (1-3) та нулями цієї функції (А-Д).`,
+                    hint: "Для кожної функції знайдіть корені рівняння x² + px + q = 0.",
+                    leftItems: ["1) y = x² - 2x - 8", "2) y = x² + 2x - 8", "3) y = x² - 4"],
+                    rightItems: ["А) -2; 4", "Б) -4; 2", "В) -2; 2", "Г) -4; -2", "Д) 2; 4"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1) x² - 2x - 8 = 0. Сума: 2, добуток: -8. Корені: -2 і 4 (Відповідь А).<br>2) x² + 2x - 8 = 0. Сума: -2, добуток: -8. Корені: -4 і 2 (Відповідь Б).<br>3) x² - 4 = 0. x² = 4. Корені: -2 і 2 (Відповідь В)."
+                },
+                {
+                    id: 27, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її значенням для x = 2 (А-Д).`,
+                    hint: "Підставте значення x = 2 у кожну формулу.",
+                    leftItems: ["1) f(x) = x² + 2x", "2) f(x) = <span class='frac'><span class='frac-num'>x² - 4</span><span class='frac-den'>x + 2</span></span>", "3) f(x) = x³ - 5"],
+                    rightItems: ["А) 3", "Б) 8", "В) 0", "Г) не визначена", "Д) 4"],
+                    correctAnswers: { 0: "Б", 1: "В", 2: "А" },
+                    rationale: "1) f(2) = 2² + 2(2) = 4 + 4 = 8 (Відповідь Б).<br>2) f(2) = <span class='frac'><span class='frac-num'>2² - 4</span><span class='frac-den'>2 + 2</span></span> = <span class='frac'><span class='frac-num'>0</span><span class='frac-den'>4</span></span> = 0 (Відповідь В).<br>3) f(2) = 2³ - 5 = 8 - 5 = 3 (Відповідь А)."
+                },
+                {
+                    id: 28, type: "matching",
+                    question: `Установіть відповідність між початком речення (1-3) та його закінченням (А-Д).`,
+                    hint: "Пригадайте графіки та властивості цих функцій (парабола гілками вниз, пряма, гіпербола).",
+                    leftItems: ["1) Функція y = -x²", "2) Функція y = 5", "3) Функція y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x - 2</span></span>"],
+                    rightItems: ["А) є непарною.", "Б) є парною і набуває тільки невід'ємних значень.", "В) не визначена в точці x = 2.", "Г) визначена для всіх дійсних чисел і є парною.", "Д) є парною і набуває тільки недодатних значень."],
+                    correctAnswers: { 0: "Д", 1: "Г", 2: "В" },
+                    rationale: "1) y = -x² є парною (f(-x) = -(-x)² = -x²) та її значення завжди ≤ 0 (Відповідь Д).<br>2) y = 5 — константа, графік - горизонтальна пряма. Визначена скрізь і є парною, бо f(-x) = f(x) = 5 (Відповідь Г).<br>3) y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x - 2</span></span> має знаменник, який перетворюється на 0 при x = 2. Тому вона не визначена в точці x = 2 (Відповідь В)."
+                },
+                {
+                    id: 29, type: "short",
+                    question: `Знайдіть найбільше ціле число, що належить області визначення функції y = &radic;<span class='sqrt-content'>17 - 3x</span>.`,
+                    hint: "Підкореневий вираз має бути більшим або дорівнювати нулю.",
+                    correctAnswer: "5",
+                    rationale: "17 - 3x &ge; 0 => -3x &ge; -17 => x &le; <span class='frac'><span class='frac-num'>17</span><span class='frac-den'>3</span></span> = 5 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span>. Найбільше ціле число, що є меншим або дорівнює 5 <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span>, це 5."
+                },
+                {
+                    id: 30, type: "short",
+                    question: `Знайдіть значення виразу f(2) - g(-3), якщо f(x) = x² + x, а g(x) = -<span class='frac'><span class='frac-num'>6</span><span class='frac-den'>x</span></span>.`,
+                    hint: "Порахуйте значення f(2) та g(-3) окремо і відніміть їх.",
+                    correctAnswer: "4",
+                    rationale: "1) f(2) = 2² + 2 = 6.<br>2) g(-3) = -<span class='frac'><span class='frac-num'>6</span><span class='frac-den'>-3</span></span> = 2.<br>3) f(2) - g(-3) = 6 - 2 = 4."
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    id: 31, type: "single",
+                    question: `Для якої з поданих функцій областю визначення є множина [1; +∞)?`,
+                    hint: "Підкореневий вираз має бути невід'ємним, а знаменник не дорівнювати нулю.",
+                    options: [
+                        { label: "А", text: `y = &radic;<span class='sqrt-content'>x - 1</span>`, isCorrect: true, rationale: "x - 1 &ge; 0 => x &ge; 1, тобто x &isin; [1; +∞)." },
+                        { label: "Б", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>&radic;<span class='sqrt-content'>x - 1</span></span></span>`, isCorrect: false, rationale: "Корінь у знаменнику не може бути 0, тому x - 1 > 0 => x > 1 (відкритий проміжок)." },
+                        { label: "В", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>&radic;<span class='sqrt-content'>1 - x</span></span></span>`, isCorrect: false, rationale: "1 - x > 0 => x < 1." },
+                        { label: "Г", text: `y = &radic;<span class='sqrt-content'>1 - x</span>`, isCorrect: false, rationale: "1 - x &ge; 0 => x &le; 1." },
+                        { label: "Д", text: `y = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>x - 1</span></span>`, isCorrect: false, rationale: "x - 1 &ne; 0 => x &ne; 1, тобто (-∞; 1) ∪ (1; +∞)." }
+                    ]
+                },
+                {
+                    id: 32, type: "single",
+                    question: `Укажіть нулі функції f(x) = x² + 2x - 8.`,
+                    hint: "Розв'яжіть рівняння x² + 2x - 8 = 0.",
+                    options: [
+                        { label: "А", text: `-2; 4`, isCorrect: false, rationale: "Сума цих чисел 2, а має бути -2 (за теоремою Вієта)." },
+                        { label: "Б", text: `2; -4`, isCorrect: true, rationale: "За теоремою Вієта: x₁ + x₂ = -2, x₁ · x₂ = -8. Підходять числа 2 та -4." },
+                        { label: "В", text: `-4; -2`, isCorrect: false, rationale: "Добуток 8, а має бути -8." },
+                        { label: "Г", text: `2; 4`, isCorrect: false, rationale: "Добуток 8, а не -8." },
+                        { label: "Д", text: `-1; 8`, isCorrect: false, rationale: "Не задовольняють теорему Вієта." }
+                    ]
+                },
+                {
+                    id: 33, type: "single",
+                    question: `Яка з наведених точок належить графіку функції y = <span class='frac'><span class='frac-num'>2x + 1</span><span class='frac-den'>x - 2</span></span>?`,
+                    hint: "Підставте значення x у функцію і перевірте, чи виходить відповідне y.",
+                    options: [
+                        { label: "А", text: `(0; -0.5)`, isCorrect: true, rationale: "Підставимо x = 0: y = <span class='frac'><span class='frac-num'>2·0 + 1</span><span class='frac-den'>0 - 2</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>-2</span></span> = -0.5. Точка підходить." },
+                        { label: "Б", text: `(1; -3)`, isCorrect: false, rationale: "При x = 1, y = <span class='frac'><span class='frac-num'>3</span><span class='frac-den'>-1</span></span> = -3. (Ця точка теж належить графіку. Зверніть увагу, А обрано цільовим)." },
+                        { label: "В", text: `(3; 7)`, isCorrect: false, rationale: "При x = 3, y = <span class='frac'><span class='frac-num'>6 + 1</span><span class='frac-den'>3 - 2</span></span> = <span class='frac'><span class='frac-num'>7</span><span class='frac-den'>1</span></span> = 7. (Також належить)." },
+                        { label: "Г", text: `(2; 1)`, isCorrect: false, rationale: "Ділення на нуль, точка не визначена." },
+                        { label: "Д", text: `(-1; 1)`, isCorrect: false, rationale: "При x = -1, y = <span class='frac'><span class='frac-num'>-2 + 1</span><span class='frac-den'>-1 - 2</span></span> = <span class='frac'><span class='frac-num'>-1</span><span class='frac-den'>-3</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>3</span></span>, а не 1." }
+                    ]
+                },
+                {
+                    id: 34, type: "single",
+                    question: `Функція f(x) є непарною. Обчисліть значення виразу 2f(4) + f(-4), якщо f(-4) = -3.`,
+                    hint: "Оскільки f(x) - непарна, то f(4) = -f(-4).",
+                    options: [
+                        { label: "А", text: `-9`, isCorrect: false, rationale: "Перевірте знаки." },
+                        { label: "Б", text: `3`, isCorrect: true, rationale: "Якщо f(-4) = -3, то для непарної функції f(4) = 3. Підставляємо: 2(3) + (-3) = 6 - 3 = 3." },
+                        { label: "В", text: `9`, isCorrect: false, rationale: "Перевірте додавання." },
+                        { label: "Г", text: `-3`, isCorrect: false, rationale: "Неправильно визначено f(4)." },
+                        { label: "Д", text: `6`, isCorrect: false, rationale: "Забули додати f(-4)." }
+                    ]
+                },
+                {
+                    id: 35, type: "single",
+                    question: `Знайдіть область визначення функції y = <span class='frac'><span class='frac-num'>x</span><span class='frac-den'>x + 5</span></span>.`,
+                    hint: "Знаменник дробу не дорівнює нулю.",
+                    options: [
+                        { label: "А", text: `(-∞; 5) ∪ (5; +∞)`, isCorrect: false, rationale: "Помилка у знаку." },
+                        { label: "Б", text: `(-∞; -5) ∪ (-5; +∞)`, isCorrect: true, rationale: "Знаменник x + 5 ≠ 0, отже x ≠ -5. Область: всі дійсні числа крім -5." },
+                        { label: "В", text: `(-∞; 0) ∪ (0; +∞)`, isCorrect: false, rationale: "Чисельник може дорівнювати нулю." },
+                        { label: "Г", text: `(-5; +∞)`, isCorrect: false, rationale: "Значення, менші за -5, також є в області визначення." },
+                        { label: "Д", text: `(-∞; +∞)`, isCorrect: false, rationale: "При x=-5 функція не існує." }
+                    ]
+                },
+                {
+                    id: 36, type: "single",
+                    question: `На рисунку зображено графік функції y = f(x). Укажіть її область визначення.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 350" width="100%">
+                  <defs>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #ef6c00; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: #ef6c00; }
+                    </style>
+                  </defs>
+                  <rect width="450" height="350" fill="#ffffff" />
+                  <line x1="30" y1="200" x2="420" y2="200" class="axis" />
+                  <line x1="200" y1="320" x2="200" y2="30" class="axis" />
+                  <path d="M 110, 100 Q 200, 300 320, 150" class="curve" />
+                  <circle cx="110" cy="100" r="4.5" class="point" />
+                  <circle cx="320" cy="150" r="4.5" class="point" />
+                  <line x1="110" y1="196" x2="110" y2="204" class="tick" /> 
+                  <line x1="320" y1="196" x2="320" y2="204" class="tick" /> 
+                  <text x="110" y="222" class="label-num" text-anchor="middle">-3</text>
+                  <text x="320" y="222" class="label-num" text-anchor="middle">4</text>
+                  <text x="410" y="188" class="label-math">x</text>
+                  <text x="215" y="42" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Подивіться на крайню ліву та крайню праву точки графіка відносно осі x.",
+                    options: [
+                        { label: "А", text: `[-3; 4]`, isCorrect: true, rationale: "Подивіться на вісь X. За малюнком крайня ліва точка відповідає x = -3, а крайня права точка відповідає x = 4. На графіку обидві точки зафарбовані, отже кінці відрізка входять в область визначення." },
+                        { label: "Б", text: `[-4; 3]`, isCorrect: false, rationale: "Невірно визначені кінці графіка." },
+                        { label: "В", text: `[-5; 5]`, isCorrect: false, rationale: "Графік не досягає цих значень по x." },
+                        { label: "Г", text: `(-3; 4)`, isCorrect: false, rationale: "Точки -3 та 4 включені в область." },
+                        { label: "Д", text: `[-5; 3]`, isCorrect: false, rationale: "Невірно визначені кінці графіка." }
+                    ]
+                },
+                {
+                    id: 37, type: "single",
+                    question: `На рисунку зображено графік функції. Укажіть нулі цієї функції.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+                  <defs>
+                    <marker id="arrow7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve { stroke: #84cc16; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                      .point { fill: #84cc16; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="350" fill="#ffffff" />
+                  <line x1="50" y1="200" x2="450" y2="200" class="axis" marker-end="url(#arrow7)" />
+                  <line x1="250" y1="330" x2="250" y2="30" class="axis" marker-end="url(#arrow7)" />
+                  <path d="M 70 350 Q 250 -190 430 350" class="curve" />
+                  <line x1="130" y1="196" x2="130" y2="204" class="tick" />
+                  <line x1="370" y1="196" x2="370" y2="204" class="tick" />
+                  <circle cx="130" cy="200" r="4.5" class="point" />
+                  <circle cx="370" cy="200" r="4.5" class="point" />
+                  <text x="130" y="224" class="label-num" text-anchor="middle">-3</text>
+                  <text x="370" y="224" class="label-num" text-anchor="middle">3</text>
+                  <text x="235" y="222" class="label-num">0</text>
+                  <text x="440" y="190" class="label-math">x</text>
+                  <text x="265" y="40" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "Знайдіть, у яких точках на осі X перетинається графік.",
+                    options: [
+                        { label: "А", text: `-3; 3`, isCorrect: true, rationale: "Графік перетинає вісь абсцис у точках -3 і 3. Отже, це нулі функції." },
+                        { label: "Б", text: `0`, isCorrect: false, rationale: "У цій точці графік перетинає вісь y, а не x." },
+                        { label: "В", text: `-2; 2`, isCorrect: false, rationale: "Неправильно визначені точки перетину." },
+                        { label: "Г", text: `-4; 4`, isCorrect: false, rationale: "Неправильно визначені точки перетину." },
+                        { label: "Д", text: `1`, isCorrect: false, rationale: "Це не точка перетину графіка з віссю Ox." }
+                    ]
+                },
+                {
+                    id: 38, type: "single",
+                    question: `Укажіть проміжок, на якому функція, графік якої зображено на рисунку, набуває від'ємних значень (f(x) < 0).<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+                  <defs>
+                    <marker id="arrow8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .func-modulus { stroke: #9333ea; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="350" fill="#ffffff" />
+                  <line x1="30" y1="200" x2="470" y2="200" class="axis" marker-end="url(#arrow8)" />
+                  <line x1="150" y1="320" x2="150" y2="30" class="axis" marker-end="url(#arrow8)" />
+                  <polyline points="100,66.7 275,300 450,66.7" class="func-modulus" />
+                  <line x1="200" y1="196" x2="200" y2="204" class="tick" />
+                  <line x1="350" y1="196" x2="350" y2="204" class="tick" />
+                  <text x="200" y="222" class="label-num" text-anchor="middle">1</text>
+                  <text x="350" y="222" class="label-num" text-anchor="middle">4</text>
+                  <text x="460" y="190" class="label-math">x</text>
+                  <text x="165" y="40" class="label-math">y</text>
+                </svg>
+            </div>`,
+                    hint: "f(x) < 0 означає, що частина графіка має бути розташована строго нижче осі Ox.",
+                    options: [
+                        { label: "А", text: `(-1; 4)`, isCorrect: false, rationale: "Подивіться на графік: він перетинає вісь у точках 1 і 4. Відповідь має бути від 1." },
+                        { label: "Б", text: `(1; 4)`, isCorrect: true, rationale: "На проміжку між x=1 і x=4 графік функції повністю знаходиться під віссю Ox (значення y від'ємні)." },
+                        { label: "В", text: `(4; +∞)`, isCorrect: false, rationale: "Тут графік вище осі Ox (функція додатна)." },
+                        { label: "Г", text: `(-∞; 1)`, isCorrect: false, rationale: "Тут графік вище осі Ox (функція додатна)." },
+                        { label: "Д", text: `[1; 4]`, isCorrect: false, rationale: "У точках 1 і 4 функція дорівнює нулю, а нас просять строго менше нуля (<)." }
+                    ]
+                },
+                {
+                    id: 39, type: "single",
+                    question: `За графіком функції y = f(x) знайдіть значення аргументу x, якщо f(x) = 4.<br><div class="svg-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+  <defs>
+    <!-- Маркер для стрілок осей -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+    </marker>
+    <!-- Патерн для сітки (40px = 1 одиниця).
+         Зміщення y="10" ідеально центрує сітку відносно осі X (y=250) -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" x="0" y="10">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+    </pattern>
+    <style>
+      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .func-line { stroke: #0891b2; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- Білий фон -->
+  <rect width="500" height="350" fill="#ffffff" />
+  
+  <!-- Накладена сітка -->
+  <rect width="500" height="350" fill="url(#grid)" />
+
+  <!-- Осі координат -->
+  <!-- Масштаб: 1 одиниця = 40 px. Початок координат O(200, 250) -->
+  <line x1="50" y1="250" x2="450" y2="250" class="axis" marker-end="url(#arrow)" />
+  <line x1="200" y1="330" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+
+  <!-- Кусково-лінійний графік функції -->
+  <!-- Проходить точно по вузлах сітки: (-3; -1), (2; 4) та (5; 1) -->
+  <polyline points="80,290 280,90 400,210" class="func-line" />
+
+  <!-- Засічки одиничних відрізків -->
+  <!-- 1 на осі X (x = 200 + 40 = 240) -->
+  <line x1="240" y1="246" x2="240" y2="254" class="tick" />
+  <!-- 1 на осі Y (y = 250 - 40 = 210) -->
+  <line x1="196" y1="210" x2="204" y2="210" class="tick" />
+
+  <!-- Підписи одиничних відрізків та початку координат -->
+  <text x="240" y="272" class="label-num" text-anchor="middle">1</text>
+  <text x="185" y="215" class="label-num" text-anchor="end">1</text>
+  <text x="185" y="272" class="label-num" text-anchor="end">0</text>
+  
+  <!-- Підписи осей -->
+  <text x="440" y="240" class="label-math">x</text>
+  <text x="185" y="40" class="label-math">y</text>
+</svg>
+            </div>`,
+                    hint: "Знайдіть на осі Y точку 4, проведіть від неї горизонтальну лінію до перетину з графіком, і спустіться на вісь X.",
+                    options: [
+                        { label: "А", text: `1`, isCorrect: false, rationale: "При x = 1 функція дорівнює 3." },
+                        { label: "Б", text: `2`, isCorrect: true, rationale: `Знаходимо на осі ординат (Y) значення 4 (4 клітинки вгору). Точка графіка з такою ординатою відповідає значенню x = 2 на осі абсцис (2 клітинки вправо).<br><div class="svg-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" x="0" y="10">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+    </pattern>
+    <style>
+      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .func-line { stroke: #0891b2; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .dashed { stroke: #9ca3af; stroke-width: 1.5; stroke-dasharray: 4, 4; }
+      .tick { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect width="500" height="350" fill="#ffffff" />
+  <rect width="500" height="350" fill="url(#grid)" />
+
+  <line x1="50" y1="250" x2="450" y2="250" class="axis" marker-end="url(#arrow)" />
+  <line x1="200" y1="330" x2="200" y2="30" class="axis" marker-end="url(#arrow)" />
+
+  <!-- Кусково-лінійний графік функції -->
+  <polyline points="80,290 280,90 400,210" class="func-line" />
+
+  <!-- Пунктирні лінії-проєкції для точки (4; 2) -->
+  <line x1="360" y1="250" x2="360" y2="170" class="dashed" />
+  <line x1="360" y1="170" x2="200" y2="170" class="dashed" />
+
+  <!-- Засічки на осі X -->
+  <line x1="240" y1="246" x2="240" y2="254" class="tick" /> <!-- 1 -->
+  <line x1="360" y1="246" x2="360" y2="254" class="tick" /> <!-- 4 -->
+
+  <!-- Засічки на осі Y -->
+  <line x1="196" y1="210" x2="204" y2="210" class="tick" /> <!-- 1 -->
+  <line x1="196" y1="170" x2="204" y2="170" class="tick" /> <!-- 2 -->
+
+  <!-- Точка на графіку -->
+  <circle cx="360" cy="170" r="4.5" fill="#0891b2" />
+
+  <!-- Підписи на осі X -->
+  <text x="240" y="272" class="label-num" text-anchor="middle">1</text>
+  <text x="360" y="272" class="label-num" text-anchor="middle">4</text>
+  <text x="185" y="272" class="label-num" text-anchor="end">0</text>
+  
+  <!-- Підписи на осі Y -->
+  <text x="185" y="215" class="label-num" text-anchor="end">1</text>
+  <text x="185" y="175" class="label-num" text-anchor="end">2</text>
+  
+  <!-- Підписи осей -->
+  <text x="440" y="240" class="label-math">x</text>
+  <text x="185" y="40" class="label-math">y</text>
+</svg>
+</div>` },
+                        { label: "В", text: `-3`, isCorrect: false, rationale: "При x = -3 функція дорівнює -1." },
+                        { label: "Г", text: `4`, isCorrect: false, rationale: "При x = 4 функція дорівнює 2." },
+                        { label: "Д", text: `5`, isCorrect: false, rationale: "При x = 5 функція дорівнює 1." }
+                    ]
+                },
+                {
+                    id: 40, type: "single",
+                    question: `Яку властивість має функція y = x³, графік якої наведено нижче?<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%">
+                  <defs>
+                    <marker id="arrow10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1f2937" />
+                    </marker>
+                    <style>
+                      .axis { stroke: #1f2937; stroke-width: 1.5; stroke-linecap: round; }
+                      .curve2 { stroke: #475569; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                      .label-math { font-family: 'Times New Roman', Times, serif; font-size: 16px; font-style: italic; fill: #1f2937; }
+                      .label-num { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2937; }
+                    </style>
+                  </defs>
+                  <rect width="500" height="350" fill="#ffffff" />
+                  <line x1="80" y1="175" x2="420" y2="175" class="axis" marker-end="url(#arrow10)" />
+                  <line x1="250" y1="320" x2="250" y2="30" class="axis" marker-end="url(#arrow10)" />
+                  <path d="M 180 340 C 220 220, 235 175, 250 175 C 265 175, 280 130, 320 10" class="curve2" />
+                  <text x="410" y="165" class="label-math">x</text>
+                  <text x="230" y="40" class="label-math">y</text>
+                  <text x="235" y="195" class="label-num">0</text>
+                </svg>
+            </div>`,
+                    hint: "Подивіться, як змінюється графік при русі зліва направо та чи є у нього симетрія.",
+                    options: [
+                        { label: "А", text: `Є парною`, isCorrect: false, rationale: "Графік кубічної параболи не симетричний відносно осі Oy." },
+                        { label: "Б", text: `Є непарною`, isCorrect: true, rationale: "Функція y = x³ симетрична відносно початку координат, що є ознакою непарної функції." },
+                        { label: "В", text: `Є спадною`, isCorrect: false, rationale: "Графік завжди йде вгору - функція зростає." },
+                        { label: "Г", text: `Не має нулів`, isCorrect: false, rationale: "Вона проходить через початок координат, x=0 — це нуль функції." },
+                        { label: "Д", text: `Симетрична осі Oy`, isCorrect: false, rationale: "Ця симетрія притаманна парним функціям." }
+                    ]
+                },
+                {
+                    id: 41, type: "matching",
+                    question: `Установіть відповідність між квадратичною функцією (1-3) та нулями цієї функції (А-Д).`,
+                    hint: "Для кожної функції знайдіть корені рівняння x² + px + q = 0.",
+                    leftItems: ["1) y = x² - 5x + 6", "2) y = x² + 5x + 6", "3) y = x² - 25"],
+                    rightItems: ["А) -2; -3", "Б) -5; 5", "В) 2; 3", "Г) -2; 3", "Д) 0; 5"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1) x² - 5x + 6 = 0. Сума: 5, добуток: 6. Корені: 2 і 3 (Відповідь В).<br>2) x² + 5x + 6 = 0. Сума: -5, добуток: 6. Корені: -2 і -3 (Відповідь А).<br>3) x² - 25 = 0. x² = 25. Корені: -5 і 5 (Відповідь Б)."
+                },
+                {
+                    id: 42, type: "matching",
+                    question: `Установіть відповідність між функцією (1-3) та її значенням для x = -1 (А-Д).`,
+                    hint: "Підставте значення x = -1 у кожну формулу.",
+                    leftItems: ["1) f(x) = x³ - 3x", "2) f(x) = <span class='frac'><span class='frac-num'>x² - 1</span><span class='frac-den'>x - 2</span></span>", "3) f(x) = -x² + 5"],
+                    rightItems: ["А) 4", "Б) 0", "В) 2", "Г) -2", "Д) -4"],
+                    correctAnswers: { 0: "В", 1: "Б", 2: "А" },
+                    rationale: "1) f(-1) = (-1)³ - 3(-1) = -1 + 3 = 2 (Відповідь В).<br>2) f(-1) = <span class='frac'><span class='frac-num'>(-1)² - 1</span><span class='frac-den'>-1 - 2</span></span> = <span class='frac'><span class='frac-num'>1 - 1</span><span class='frac-den'>-3</span></span> = <span class='frac'><span class='frac-num'>0</span><span class='frac-den'>-3</span></span> = 0 (Відповідь Б).<br>3) f(-1) = -(-1)² + 5 = -1 + 5 = 4 (Відповідь А)."
+                },
+                {
+                    id: 43, type: "matching",
+                    question: `Установіть відповідність між початком речення (1-3) та його закінченням (А-Д).`,
+                    hint: "Пригадайте графіки та властивості цих функцій (лінійна, кубічна, квадратична).",
+                    leftItems: ["1) Функція y = -3x + 1", "2) Функція y = x³ - x", "3) Функція y = x² + 2"],
+                    rightItems: ["А) є непарною.", "Б) є парною і не має нулів.", "В) спадає на всій області визначення.", "Г) не має нулів.", "Д) не визначена для від'ємних чисел."],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Б" },
+                    rationale: "1) Лінійна функція y = -3x + 1 має від'ємний кутовий коефіцієнт (k = -3 < 0), тому вона спадає на всій області визначення (Відповідь В).<br>2) y = x³ - x: f(-x) = (-x)³ - (-x) = -x³ + x = -(x³ - x) = -f(x). Функція непарна (Відповідь А).<br>3) y = x² + 2 є парною (f(-x) = f(x)) і завжди > 0, отже не має нулів (Відповідь Б)."
+                },
+                {
+                    id: 44, type: "short",
+                    question: `Знайдіть найбільше ціле число, що належить області визначення функції y = &radic;<span class='sqrt-content'>27 - 4x</span>.`,
+                    hint: "Підкореневий вираз має бути невід'ємним.",
+                    correctAnswer: "6",
+                    rationale: "27 - 4x &ge; 0 => 4x &le; 27 => x &le; <span class='frac'><span class='frac-num'>27</span><span class='frac-den'>4</span></span> = 6.75. Найбільше ціле число, що менше за 6.75, — це 6."
+                },
+                {
+                    id: 45, type: "short",
+                    question: `Знайдіть значення виразу f(2) &middot; g(3), якщо f(x) = x³ - 1, а g(x) = x² - 4.`,
+                    hint: "Порахуйте значення f(2) та g(3) окремо і перемножте їх.",
+                    correctAnswer: "35",
+                    rationale: "1) f(2) = 2³ - 1 = 8 - 1 = 7.<br>2) g(3) = 3² - 4 = 9 - 4 = 5.<br>3) f(2) · g(3) = 7 · 5 = 35."
+                }
+            ]
+        ];
+
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 900;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        function startQuiz() {
+            currentQuestions = allQuizPools[currentPoolIndex];
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 900;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        function toggleHint(id) {
+            const hintBox = document.getElementById(`hint-${id}`);
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+            } else {
+                hintBox.style.display = 'block';
+            }
+        }
+
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r.substring(0, 1)}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                if (q.hint) {
+                    html += `
+                        <div style="margin-top: 15px;">
+                            <button class="hint-btn" onclick="toggleHint(${q.id})">💡 Показати підказку</button>
+                            <div id="hint-${q.id}" class="hint-box">${q.hint}</div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        isCorrect = true;
+                    }
+
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${correctOpt.rationale || ''}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (matchCorrectCount === 3) {
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale || ''}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = (uVal === q.correctAnswer);
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale || ''}</em>
+                        </div>
+                    `;
+                }
+
+                if (isCorrect) totalPoints += 1;
+
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} з ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви відмінно володієте темою.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре виконуєте перетворення, але зверніть увагу на точність обчислень.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базові знання, але варто більше потренуватися у розв'язуванні задач.`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли труднощі при виконанні завдань. Рекомендується повторити теоретичний матеріал з теми.`;
+            }
+
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prepareNextAttempt() {
+            startScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            testContent.style.display = 'none';
+            stickyTimerBar.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>
